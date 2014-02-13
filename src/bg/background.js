@@ -1,13 +1,13 @@
-// if you checked "fancy-settings" in extensionizr.com, uncomment this lines
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+	chrome.notifications.create('afb_flight_found', {
+		type: "basic",
+		title: "Primary Title",
+		message: "Primary message to display",
+		iconUrl: "icons/icon48.png",
+		priority: 2
+	}, function () {
 
-// var settings = new Store("settings", {
-//     "sample_setting": "This is how you use Store.js to remember values"
-// });
+	});
 
-
-//example of using a message handler from the inject scripts
-chrome.extension.onMessage.addListener(
-  function(request, sender, sendResponse) {
-  	chrome.pageAction.show(sender.tab.id);
-    sendResponse();
-  });
+    sendResponse({name: 'Bob'});
+});

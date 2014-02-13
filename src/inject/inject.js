@@ -20,3 +20,7 @@ setTimeout(function () {
 		location.reload();
 	}
 }, 10000);
+
+chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
+  console.log(response);
+});
