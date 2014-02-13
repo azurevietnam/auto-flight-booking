@@ -1,13 +1,22 @@
-chrome.extension.sendMessage({}, function(response) {
-	var readyStateCheckInterval = setInterval(function() {
-	if (document.readyState === "complete") {
-		clearInterval(readyStateCheckInterval);
+'use strict';
 
-		// ----------------------------------------------------------
-		// This part of the script triggers when page is done loading
-		console.log("Hello. This message was sent from scripts/inject.js");
-		// ----------------------------------------------------------
+var MIN_PRICE = 700000;
 
+var found = false;
+
+$('.vvFare').each(function () {
+	var price = parseInt(this.textContent.replace(/,/g, ''));
+
+	if (price < MIN_PRICE) {
+		alert('Vé có giá thấp hơn ' + MIN_PRICE + ' được tìm thấy!!!');
+		found = true;
+
+		return false;
 	}
-	}, 10);
 });
+
+setTimeout(function () {
+	if (!found) {
+		location.reload();
+	}
+}, 10000);
