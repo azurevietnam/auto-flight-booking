@@ -1,0 +1,45 @@
+body {
+	font-family: Arial;
+	font-size: 14px;
+}
+
+.togglelist {
+	list-style: none;
+	padding-left: 0;
+	margin: 0;
+}
+
+.togglelist li .action {
+	display: block;
+	width: 100px;
+	line-height: 16px;
+	margin: 3px auto;
+	padding: 6px;
+	border: none;
+	background-color: #eee;
+	color: #333;
+	font-weight: bold;
+	text-align: left;
+	text-decoration: none;
+}
+
+.togglelist li .action:hover, .togglelist li .action:focus {
+	cursor: pointer;
+	background-color: #c8e8c3;
+	outline: none;
+}
+
+.togglelist li .active {
+	background: #64d153;
+}
+
+.inlineicon {
+	vertical-align: middle;
+	min-width: 16px;
+	min-height: 16px;
+	padding: 0 6px 0 0;
+}
+
+.hotkey {
+	text-decoration: underline;
+}

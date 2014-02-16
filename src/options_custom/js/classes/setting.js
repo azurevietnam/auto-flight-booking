@@ -749,6 +749,7 @@
                 "description": "Description",
                 "button": "Button",
                 "text": "Text",
+                "file": "File",
                 "textarea": "Textarea",
                 "checkbox": "Checkbox",
                 "slider": "Slider",
