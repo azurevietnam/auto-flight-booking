@@ -1,4 +1,12 @@
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+	chrome.notifications.create('found', {
+		type: "basic",
+		title: "Primary Title",
+		message: "Found " + request.dates.join(', '),
+		iconUrl: "/icons/icon128.png"
+	}, function () {
+
+	})
 });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {

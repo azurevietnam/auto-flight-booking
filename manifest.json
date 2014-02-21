@@ -35,7 +35,7 @@
 
 	"content_scripts":[
 		{
-			"matches":["https://ameliaweb5.intelisys.ca/*"],
+			"matches":["https://ameliaweb5.intelisys.ca/*", "http://book.jetstar.com/*", "http://booknow.jetstar.com/*"],
 			"js":["js/jquery/jquery.min.js", "src/inject/inject.js"]
 		}
 	]
