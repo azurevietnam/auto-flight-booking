@@ -47,31 +47,79 @@
 	Airline.prototype.init = function () {
 		if (typeof this.routes[this._getRoute()] != 'undefined') {
 			this.routes[this._getRoute()].call(this);
-
-			var app = App.getInstance();
-
-			app.showAppIcon();
 		}
+
+		var app = App.getInstance();
+		app.showAppIcon();
 	};
 
 	Airline.prototype._getRoute = function () {
 		return '';
 	};
 
-	Airline.prototype.alertFoundBook = function (dates) {
-	/*	chrome.runtime.sendMessage({
-			route: 'found',
-			dates: dates
-		}, function(response) {
-		  console.log(response);
-		});*/
+	Airline.prototype.alertFoundBook = function (data) {
+		data.route = 'found';
 
-		alert('hello');
+		chrome.runtime.sendMessage(data, function(response) {});
 	};
 
 	function Vietjet() {
+		Airline.call(this);
 
+		this.routes = {
+			'_valueViewer': this._valueViewer
+		};
 	}
+
+	Vietjet.prototype = Object.create(Airline.prototype);
+	Vietjet.prototype.constructor = Vietjet;
+
+	Vietjet.prototype._getRoute = function () {
+		var path = location.pathname,
+			route = '';
+
+		if (path.indexOf('ValueViewer.aspx') >= 0) {
+			route = '_valueViewer';
+		}
+
+		return route;
+	};
+
+	Vietjet.prototype._valueViewer = function () {
+		var app = App.getInstance();
+
+		var days = document.querySelectorAll('.vvDayFlightLow div'),
+			days1 = [],
+			days2 = [],
+			day,
+			price;
+
+		var found = false;
+
+		console.log(app.settings.minPrice);
+
+		for (var i = 0; i < days.length; i++) {
+			price = parseInt(days[i].querySelector('.vvFare').textContent.replace(/,/g, ''));
+
+			console.log(price);
+
+			if (price <= app.settings.minPrice) {
+				days1.push(parseInt(days[i].innerHTML));
+				found = true;
+			}
+		}
+
+		if (found) {
+			this.alertFoundBook({
+				note1: days1.join(', '),
+				note2: '28, 29, 30'
+			});
+
+			app.foundDelayReload();
+		} else {
+			app.delayReload();
+		}
+	};
 
 	function JetStar() {
 		Airline.call(this);
@@ -203,12 +251,20 @@
 
 			if (url.indexOf('booknow.jetstar.com') >= 0 || url.indexOf('book.jetstar.com') >= 0) {
 				airline = new JetStar();
+			} else if (url.indexOf('ameliaweb5.intelisys.ca') >= 0) {
+				airline = new Vietjet();
 			}
 
 			if (airline) {
 				airline.init();
 			}
 		});
+	};
+
+	App.prototype.foundDelayReload = function () {
+		setTimeout(function () {
+			location.reload();			
+		}, 60000);
 	};
 
 	App.prototype.delayReload = function () {

@@ -19,12 +19,23 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 		})
 	} else if (request.route == 'found') {
-		chrome.notifications.create('found', {
-			type: "basic",
-			title: "Primary Title",
-			message: "Found " + request.dates.join(', '),
-			iconUrl: "/icons/icon128.png"
-		}, function () {
+		var items = [
+			{ title: 'Ngày đi:', message: request.note1 }
+		];
+
+		if (typeof request.note1 != 'undefined') {
+			items.push({ title: 'Ngày về:', message: request.note2 });
+		}
+
+		chrome.notifications.clear('afb_found', function () {
+			chrome.notifications.create('afb_found', {
+				type: "list",
+				title: "Tìm thấy vé giá rẻ",
+				message: '',
+				iconUrl: "/icons/icon128.png",
+				items: items
+			}, function () {
+			});
 		});
 	} else if (request.route == 'jetstar.fields') {
 		sendResponse({
