@@ -1,130 +1,263 @@
-'use strict';
+(function () {
+	'use strict';
 
-function Airline() {
-	this.routes = {};
-}
-
-Airline.prototype.init = function () {
-	if (typeof this.routes[this._getRoute()] != 'undefined') {
-		this.routes[this._getRoute()].call(this);
-	}
-};
-
-Airline.prototype._getRoute = function () {
-	return '';
-};
-
-Airline.prototype.alertFoundBook = function (dates) {
-	chrome.runtime.sendMessage({dates: dates}, function(response) {
-	  console.log(response);
-	});
-};
-
-function Vietjet() {
-
-}
-
-function JetStar() {
-	Airline.call(this);
-
-	this.routes = {
-		'CalendarSelect': this._calendarSelect,
-		'Select': this._select,
-	};
-}
-
-JetStar.prototype = Object.create(Airline.prototype);
-JetStar.prototype.constructor = JetStar;
-
-JetStar.prototype._getRoute = function () {
-	var path = location.pathname,
-		route = '';
-
-	if (path.indexOf('/Select.aspx') == 0) {
-		route = 'Select';
-	} else if (path.indexOf('/CalendarSelect.aspx') == 0) {
-		route = 'CalendarSelect';
+	// Set a cookie
+	function setCookie(name, value, hours)
+	{
+		var exp = new Date();
+		exp.setTime(exp.getTime() + (hours * 60 * 60 * 1000));
+		document.cookie = name + "=" + value + "; expires=" + exp.toGMTString() + "; path=/";
 	}
 
-	return route;
-};
+	// Get the content in a cookie
+	function getCookie(name)
+	{
+		// Search for the start of the goven cookie
+		var prefix = name + "=",
+			cookieStartIndex = document.cookie.indexOf(prefix),
+			cookieEndIndex;
 
-JetStar.prototype._calendarSelect = function() {
-	var priceLabels = document.querySelectorAll('.low-fare-selector ul li'),
-		price;
-
-	var found = false, dates = [];
-
-
-	for (var i = 0; i < priceLabels.length; i++) {
-		if (parseInt(priceLabels[i].dataset.price) <= App.minPrice) {
-			dates.push(priceLabels[i].dataset.date);
-			found = true;
+		// If the cookie is not found return null
+		if (cookieStartIndex == -1)
+		{
+			return null;
 		}
+
+		// Look for the end of the cookie
+		cookieEndIndex = document.cookie.indexOf(";", cookieStartIndex + prefix.length);
+		if (cookieEndIndex == -1)
+		{
+			cookieEndIndex = document.cookie.length;
+		}
+
+		// Extract the cookie content
+		return unescape(document.cookie.substring(cookieStartIndex + prefix.length, cookieEndIndex));
 	}
 
-	if (found) {
-		this.alertFoundBook(dates);
+	// Remove a cookie
+	function deleteCookie(name)
+	{
+		setCookie(name, null, -60);
 	}
 
-	setTimeout(function () {
-		location.reload();
-	}, 10000);
-};
-
-JetStar.prototype._select = function () {
-	var priceLabels = document.querySelectorAll('.field label'),
-		price;
-
-	for (var i = 0; i < priceLabels.length; i++) {
-	}
-};
-
-function App() {
-
-}
-
-App.prototype.init = function() {
-	// Setting
-	App.minPrice = 500000;
-
-	var url = location.toString(),
-		airline;
-
-	if (url.indexOf('booknow.jetstar.com') >= 0 || url.indexOf('book.jetstar.com') >= 0) {
-		airline = new JetStar();
+	function Airline() {
+		this.routes = {};
 	}
 
-	if (airline) {
-		airline.init();
+	Airline.prototype.init = function () {
+		if (typeof this.routes[this._getRoute()] != 'undefined') {
+			this.routes[this._getRoute()].call(this);
+
+			var app = App.getInstance();
+
+			app.showAppIcon();
+		}
+	};
+
+	Airline.prototype._getRoute = function () {
+		return '';
+	};
+
+	Airline.prototype.alertFoundBook = function (dates) {
+	/*	chrome.runtime.sendMessage({
+			route: 'found',
+			dates: dates
+		}, function(response) {
+		  console.log(response);
+		});*/
+
+		alert('hello');
+	};
+
+	function Vietjet() {
+
 	}
-};
 
-var app = new App();
+	function JetStar() {
+		Airline.call(this);
 
-app.init();
-
-/*var MIN_PRICE = 700000;
-
-var found = false;
-
-$('.vvFare').each(function () {
-	var price = parseInt(this.textContent.replace(/,/g, ''));
-
-	if (price < MIN_PRICE) {
-		alert('Vé có giá thấp hơn ' + MIN_PRICE + ' được tìm thấy!!!');
-		found = true;
-
-		return false;
+		this.routes = {
+			'CalendarSelect': this._calendarSelect,
+			'Select': this._select,
+			'Passenger': this._passenger,
+		};
 	}
-});
 
-setTimeout(function () {
-	if (!found) {
-		location.reload();
+	JetStar.prototype = Object.create(Airline.prototype);
+	JetStar.prototype.constructor = JetStar;
+
+	JetStar.prototype._getRoute = function () {
+		var path = location.pathname,
+			route = '';
+
+		if (path.indexOf('/Select.aspx') == 0) {
+			route = 'Select';
+		} else if (path.indexOf('/CalendarSelect.aspx') == 0) {
+			route = 'CalendarSelect';
+		} else if (path.indexOf('/Passenger.aspx') == 0) {
+			route = 'Passenger';
+		}
+
+		return route;
+	};
+
+	JetStar.prototype._calendarSelect = function() {
+		var app = App.getInstance(),
+			priceLabels = document.querySelectorAll('.low-fare-selector ul li'),
+			price;
+
+		var found = false,
+			dates = [];
+
+		for (var i = 0; i < priceLabels.length; i++) {
+			if (parseInt(priceLabels[i].dataset.price) <= app.settings.minPrice) {
+				dates.push(priceLabels[i].dataset.date);
+				found = true;
+			}
+		}
+
+		if (found) {
+			this.alertFoundBook(dates);
+		}
+
+		app.delayReload();
+	};
+
+	JetStar.prototype._select = function () {
+		var priceLabels = document.querySelectorAll('.field label'),
+			price;
+
+		for (var i = 0; i < priceLabels.length; i++) {
+		}
+	};
+
+	JetStar.prototype._passenger = function () {
+		var app = App.getInstance();
+
+		app.sendMessage({
+			route: 'jetstar.fields'
+		}, function (fields) {
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListTitle_1').val(fields.title);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_TextBoxFirstName_1').val(fields.lastName);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_TextBoxLastName_1').val(fields.firstName);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListGender_1').val(fields.gender);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListBirthDateDay_1').val(fields.dob);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListBirthDateMonth_1').val(fields.mob);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListBirthDateYear_1').val(fields.yob);
+
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListTitle_2').val(fields.title2);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_TextBoxFirstName_2').val(fields.lastName2);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_TextBoxLastName_2').val(fields.firstName2);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListGender_2').val(fields.gender2);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListBirthDateDay_2').val(fields.dob2);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListBirthDateMonth_2').val(fields.mob2);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListBirthDateYear_2').val(fields.yob2);
+
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_AdditionalBaggagePassengerView_AdditionalBaggageDropDownListJourney0').val(fields.baggage1);
+			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_AdditionalBaggagePassengerView_AdditionalBaggageDropDownListJourney1').val(fields.baggage2);
+
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_DropDownListTitle').val(fields.title);
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxFirstName').val(fields.lastName);
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxLastName').val(fields.firstName);
+
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxEmailAddress').val(fields.email);
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxEmailAddressConfirm').val(fields.email);
+
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxOtherPhone').val(fields.mobile);
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxHomePhone').val(fields.mobile);
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxWorkPhone').val(fields.mobile);
+
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxAddressLine1').val(fields.street);
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxCity').val(fields.city);
+
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_DropDownListStateProvince').val(fields.province);
+			$('#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxPostalCode').val(fields.postCode);
+		});
+	};
+
+	function App() {
+
 	}
-}, 10000);
 
-chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
-  console.log(response);
-});*/
+	App.setInstance = function (app) {
+		App.instance = app;
+	};
+
+	App.getInstance = function () {
+		return App.instance;
+	};
+
+	App.prototype.init = function() {
+		var self = this;
+
+		chrome.runtime.onMessage.addListener(this.onMessage.bind(this));
+
+		// Setting
+		this.sendMessage({
+			route: "setting"
+		}, function (settings) {
+			self.settings = settings;
+
+			var url = location.toString(),
+				airline;
+
+			if (url.indexOf('booknow.jetstar.com') >= 0 || url.indexOf('book.jetstar.com') >= 0) {
+				airline = new JetStar();
+			}
+
+			if (airline) {
+				airline.init();
+			}
+		});
+	};
+
+	App.prototype.delayReload = function () {
+		setTimeout(function () {
+			location.reload();
+		}, this.settings.reloadSecond);
+	};
+
+	App.prototype.sendMessage = function(request, callback) {
+		chrome.runtime.sendMessage(request, function(response) {
+			callback(response);
+		});
+	};
+
+	App.prototype.onMessage = function (request, sender, sendResponse) {
+		if (request.route == 'toggleStatus') {
+			this.toggleStatus();
+		}
+	};
+
+	App.prototype.isOn = function () {
+		var status = getCookie('afb_status');
+
+		return !status || status == 'off' ? false : true;
+	};
+
+	App.prototype.toggleStatus = function () {
+		var newStatus = this.isOn() ? 'on' : 'off';
+
+		if (newStatus == 'on') {
+			setCookie('afb_status', 'on');
+		} else {
+			deleteCookie('afb_status', 'off');
+		}
+
+		this.showAppIcon(newStatus);
+	};
+
+	App.prototype.showAppIcon = function (status) {
+		status = status || getCookie('afb_status') || 'off';
+
+		this.sendMessage({
+			route: 'showAppIcon',
+			status: status
+		});
+	};
+
+	var app = new App();
+
+	App.setInstance(app);
+	app.init();
+})();
