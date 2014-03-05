@@ -9,15 +9,9 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			reloadSecond: getSetting('reloadSecond')
 		});
 	} else if (request.route == 'showAppIcon') {
-		chrome.pageAction.show(sender.tab.id);
-		var icon = request.status == 'on' ? '/icons/icon19.png' : '/icons/icon19-disabled.png';
-
-		chrome.pageAction.setIcon({
-			tabId: sender.tab.id,
-			path: icon
-		}, function () {
-
-		})
+		chrome.browserAction.setBadgeText({
+			text: request.status
+		});
 	} else if (request.route == 'found') {
 		var items = [
 			{ title: 'Ngày đi:', message: request.note1 }
