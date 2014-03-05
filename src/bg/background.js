@@ -27,6 +27,10 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			items.push({ title: 'Ngày về:', message: request.note2 });
 		}
 
+		var audio = new Audio();
+		audio.src = 'sounds/found.ogg';
+		audio.play();
+
 		chrome.notifications.clear('afb_found', function () {
 			chrome.notifications.create('afb_found', {
 				type: "list",

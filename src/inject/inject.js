@@ -96,12 +96,8 @@
 
 		var found = false;
 
-		console.log(app.settings.minPrice);
-
 		for (var i = 0; i < days.length; i++) {
 			price = parseInt(days[i].querySelector('.vvFare').textContent.replace(/,/g, ''));
-
-			console.log(price);
 
 			if (price <= app.settings.minPrice) {
 				days1.push(parseInt(days[i].innerHTML));
@@ -270,7 +266,7 @@
 	App.prototype.delayReload = function () {
 		setTimeout(function () {
 			location.reload();
-		}, this.settings.reloadSecond);
+		}, this.settings.reloadSecond * 1000);
 	};
 
 	App.prototype.sendMessage = function(request, callback) {
