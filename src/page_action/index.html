@@ -30,6 +30,7 @@
 			}
 		</style>
 		<script src="/js/analytics.js"></script>
+		<script src="/js/defaults.js"></script>
 		<script src="script.js"></script>
 	</head>
 
@@ -47,11 +48,11 @@
 			<legend>Theo giõi giá vé</legend>
 			<div class="control">
 				<label for="">Giá vé tối thiểu:</label>
-				<input type="number" placeholder="500000" />
+				<input type="number" class="option" data-property="minPrice" placeholder="500000" />
 			</div>
 			<div class="control">
 				<label for="">Thời gian kiểm tra lại:</label>
-				<input type="number" placeholder="10" />
+				<input type="number" class="option" data-property="reloadSecond" placeholder="10" />
 				<p class="hint">Thời gian refresh lại trang giá vé (tính bằng giây)</p>
 			</div>
 		</fieldset>

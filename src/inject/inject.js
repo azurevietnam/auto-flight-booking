@@ -161,10 +161,16 @@
 		}
 
 		if (found) {
-			this.alertFoundBook(dates);
+			this.alertFoundBook({
+				note1: dates.join(', '),
+				note2: ''
+			});
+
+			app.foundDelayReload();
+		} else {
+			app.delayReload();
 		}
 
-		app.delayReload();
 	};
 
 	JetStar.prototype._select = function () {
