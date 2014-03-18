@@ -50,7 +50,7 @@
 		}
 
 		var app = App.getInstance();
-		app.showAppIcon();
+		app.updateStatus();
 	};
 
 	Airline.prototype._getRoute = function () {
@@ -269,8 +269,10 @@
 		}, 60000);
 	};
 
+	App.reloadTimeout = 0;
+
 	App.prototype.delayReload = function () {
-		setTimeout(function () {
+		App.reloadTimeout = setTimeout(function () {
 			location.reload();
 		}, this.settings.reloadSecond * 1000);
 	};
@@ -283,7 +285,11 @@
 
 	App.prototype.onMessage = function (request, sender, sendResponse) {
 		if (request.route == 'toggleStatus') {
-			this.toggleStatus();
+			this.toggleStatus(sendResponse);
+		} else if (request.route == 'updateStatus') {
+			this.updateStatus();
+		} else if (request.route == 'getStatus') {
+			this.updateStatus(sendResponse);
 		}
 	};
 
@@ -293,25 +299,39 @@
 		return !status || status == 'off' ? false : true;
 	};
 
-	App.prototype.toggleStatus = function () {
-		var newStatus = this.isOn() ? 'on' : 'off';
+	App.prototype.toggleStatus = function (sendResponse) {
+		var newStatus = this.isOn() ? 'off' : 'on';
 
-		if (newStatus == 'on') {
-			setCookie('afb_status', 'on');
-		} else {
-			deleteCookie('afb_status', 'off');
+		setCookie('afb_status', newStatus);
+
+		this.updateStatus();
+
+		if (typeof sendResponse == 'function') {
+			sendResponse({
+				request: 'toggleStatus',
+				status: newStatus
+			});
 		}
 
-		this.showAppIcon(newStatus);
+		if (newStatus == 'off') {
+			clearTimeout(App.reloadTimeout);
+		} else {
+			location.reload();
+		}
 	};
 
-	App.prototype.showAppIcon = function (status) {
-		status = status || getCookie('afb_status') || 'off';
+	App.prototype.updateStatus = function (sendResponse) {
+		var status = this.isOn() ? 'on' : 'off',
+			request = {
+				route: 'status',
+				status: status
+			};
 
-		this.sendMessage({
-			route: 'showAppIcon',
-			status: status
-		});
+		if (typeof sendResponse == 'function') {
+			sendResponse(request);
+		} else {
+			this.sendMessage(request, function () {});
+		}
 	};
 
 	var app = new App();

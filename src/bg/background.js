@@ -8,10 +8,8 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			minPrice: getSetting('minPrice'),
 			reloadSecond: getSetting('reloadSecond')
 		});
-	} else if (request.route == 'showAppIcon') {
-		chrome.browserAction.setBadgeText({
-			text: request.status
-		});
+	} else if (request.route == 'status') {
+		setStatus(sender.tab.id, request.status);
 	} else if (request.route == 'found') {
 		var items = [
 			{ title: 'Ngày đi:', message: request.note1 }
@@ -64,3 +62,24 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 		});
 	}
 });
+
+chrome.tabs.onActivated.addListener(function (info) {
+	onSetStatus(info.tabId);
+});
+
+function onSetStatus(tabId) {
+	setStatus(tabId, 'off');
+
+	chrome.tabs.sendMessage(tabId, {
+		route: 'updateStatus'
+	}, function (response) {
+		setStatus(tabId, response.status);
+	});
+}
+
+function setStatus(tabId, status) {
+	chrome.browserAction.setBadgeText({
+		text: status,
+		tabId: tabId
+	});
+}

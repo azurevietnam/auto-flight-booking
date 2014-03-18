@@ -6,28 +6,58 @@ function getSetting(key) {
 	return JSON.parse(localStorage.getItem('store.settings.' + key));
 }
 
+function getCurrentTab(callback) {
+	chrome.tabs.query({ active: true, windowId: chrome.windows.WINDOW_ID_CURRENT }, function(tabs) {
+		callback(tabs[0]);
+	});
+}
+
+function updateToggleButton(status) {
+	var buttonHtml = '<button id="toggle">{text}</button>';
+
+	if (status == 'on') {
+		buttonHtml = buttonHtml.replace('{text}', 'Tắt theo giõi giá vé');
+	} else {
+		buttonHtml = buttonHtml.replace('{text}', 'Bật theo giõi giá vé');
+	}
+
+	document.querySelector('#buttons').innerHTML = buttonHtml;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-	document.getElementById('toggle').addEventListener('click', function () {
-		chrome.tabs.query({ active: true, windowId: chrome.windows.WINDOW_ID_CURRENT }, function(tabs) {
-			chrome.tabs.sendMessage(
-				tabs[0].id, {
-					route: "toggleStatus",
-				}, function(response) {
-					windows.close();
-				}
-			);
-		});
+	getCurrentTab(function (tab) {
+		chrome.tabs.sendMessage(
+			tab.id, {
+				route: "getStatus",
+			}, function(response) {
+				updateToggleButton(response.status);
+			}
+		);
 	});
 
-	document.getElementById('option').addEventListener('click', function () {
-		chrome.tabs.create({
-			url: 'src/options_custom/index.html'
-		});
+	document.querySelector('body').addEventListener('click', function (event) {
+		if (event.target.id == 'toggle') {
+			getCurrentTab(function (tab) {
+				chrome.tabs.sendMessage(
+					tab.id, {
+						route: "toggleStatus",
+					}, function(response) {
+						updateToggleButton(response.status);
+					}
+				);
+			});
+		}
+	});
 
-		trackEvent('option', 'clicked');
+	// document.getElementById('option').addEventListener('click', function () {
+	// 	chrome.tabs.create({
+	// 		url: 'src/options_custom/index.html'
+	// 	});
 
-		window.close();
-	}, false);
+	// 	trackEvent('option', 'clicked');
+
+	// 	window.close();
+	// }, false);
 
 	// Options
 	var options = {
