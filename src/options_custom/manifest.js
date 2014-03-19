@@ -4,20 +4,6 @@ this.manifest = {
     "icon": "icon.png",
     "settings": [
         {
-            "tab": "Theo dõi giá vé",
-            "name": "minPrice",
-            "type": "text",
-            "label": "Giá tối đa: ",
-            "text": "500000"
-        },
-        {
-            "tab": "Theo dõi giá vé",
-            "name": "reloadSecond",
-            "type": "text",
-            "label": "Thời gian kiểm tra lại giá vé (tính bằng giây): ",
-            "text": "10"
-        },
-        {
             "tab": "JetStar",
             "group": 'Thông tin hành khách 1',
             'label': 'Quý danh:',
@@ -398,10 +384,6 @@ this.manifest = {
         }
     ],
     "alignment": [
-        [
-            "minPrice",
-            "reloadSecond"
-        ],
         [
             'jetstar.title'
         ],

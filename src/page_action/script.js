@@ -13,7 +13,7 @@ function getCurrentTab(callback) {
 }
 
 function updateToggleButton(status) {
-	var buttonHtml = '<button id="toggle">{text}</button>';
+	var buttonHtml = '{text}';
 
 	if (status == 'on') {
 		buttonHtml = buttonHtml.replace('{text}', 'Tắt theo giõi giá vé');
@@ -21,7 +21,7 @@ function updateToggleButton(status) {
 		buttonHtml = buttonHtml.replace('{text}', 'Bật theo giõi giá vé');
 	}
 
-	document.querySelector('#buttons').innerHTML = buttonHtml;
+	document.querySelector('#toggle').innerHTML = buttonHtml;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	document.querySelector('body').addEventListener('click', function (event) {
 		if (event.target.id == 'toggle') {
+			trackEvent('toggleButton', 'clicked');
+
 			getCurrentTab(function (tab) {
 				chrome.tabs.sendMessage(
 					tab.id, {
@@ -49,12 +51,22 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 
+	document.getElementById('chat').addEventListener('click', function () {
+		chrome.tabs.create({
+			url: 'src/chat/index.html'
+		});
+
+		trackEvent('chatButton', 'clicked');
+
+		window.close();
+	});
+
 	document.getElementById('option').addEventListener('click', function () {
 		chrome.tabs.create({
 			url: 'src/options_custom/index.html'
 		});
 
-		trackEvent('option', 'clicked');
+		trackEvent('optionButton', 'clicked');
 
 		window.close();
 	}, false);

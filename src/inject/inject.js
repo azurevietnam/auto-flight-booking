@@ -80,6 +80,8 @@
 
 		if (path.indexOf('ValueViewer.aspx') >= 0) {
 			route = '_valueViewer';
+		} else if (path.indexOf('TravelOptions.aspx') >= 0) {
+			route = '_travelOptions';
 		}
 
 		return route;
@@ -88,27 +90,48 @@
 	Vietjet.prototype._valueViewer = function () {
 		var app = App.getInstance();
 
-		var days = document.querySelectorAll('.vvDayFlightLow div'),
-			days1 = [],
+		if (!app.isOn()) {
+			return false;
+		}
+
+		var days1 = [],
 			days2 = [],
-			day,
 			price;
 
 		var found = false;
 
-		for (var i = 0; i < days.length; i++) {
-			price = parseInt(days[i].querySelector('.vvFare').textContent.replace(/,/g, ''));
+		var valueTables = document.querySelectorAll('.hdrTable700');
 
-			if (price <= app.settings.minPrice) {
-				days1.push(parseInt(days[i].innerHTML));
-				found = true;
+		if (typeof valueTables[0] != 'undefined') {
+			var days = valueTables[0].querySelectorAll('.fareClass div, .vvDaySearchFlightSelected div');
+
+			for (var i = 0; i < days.length; i++) {
+				price = parseInt(days[i].querySelector('.vvFare').textContent.replace(/,/g, ''));
+
+				if (price <= app.settings.minPrice) {
+					days1.push(parseInt(days[i].innerHTML));
+					found = true;
+				}
+			}
+		}
+
+		if (typeof valueTables[1] != 'undefined') {
+			var days = valueTables[1].querySelectorAll('.fareClass div, .vvDaySearchFlightSelected div');
+
+			for (var i = 0; i < days.length; i++) {
+				price = parseInt(days[i].querySelector('.vvFare').textContent.replace(/,/g, ''));
+
+				if (price <= app.settings.minPrice) {
+					days2.push(parseInt(days[i].innerHTML));
+					found = true;
+				}
 			}
 		}
 
 		if (found) {
 			this.alertFoundBook({
 				note1: days1.join(', '),
-				note2: '28, 29, 30'
+				note2: days2.join(', ')
 			});
 
 			app.foundDelayReload();
@@ -146,8 +169,13 @@
 	};
 
 	JetStar.prototype._calendarSelect = function() {
-		var app = App.getInstance(),
-			priceLabels = document.querySelectorAll('.low-fare-selector ul li'),
+		var app = App.getInstance();
+
+		if (!app.isOn()) {
+			return false;
+		}
+
+		var priceLabels = document.querySelectorAll('.low-fare-selector ul li'),
 			price;
 
 		var found = false,
@@ -174,6 +202,12 @@
 	};
 
 	JetStar.prototype._select = function () {
+		var app = App.getInstance();
+
+		if (!app.isOn()) {
+			return false;
+		}
+		
 		var priceLabels = document.querySelectorAll('.field label'),
 			price;
 
