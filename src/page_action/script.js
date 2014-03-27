@@ -74,7 +74,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	// Options
 	var options = {
 		minPrice: getSetting('minPrice') || DEFAULTS.minPrice,
-		reloadSecond: getSetting('reloadSecond') || DEFAULTS.reloadSecond
+		reloadSecond: getSetting('reloadSecond') || DEFAULTS.reloadSecond,
+		ring: typeof getSetting('ring') !== 'undefined' ? getSetting('ring') : DEFAULTS.ring
 	};
 
 	var optionEls = document.querySelectorAll('.option'),
@@ -83,10 +84,18 @@ document.addEventListener('DOMContentLoaded', function () {
 	for (var i = 0; i < optionEls.length; i++) {
 		optionEl = optionEls[i];
 
-		optionEl.value = options[optionEl.dataset.property];
+		if (optionEl.type == 'number') {
+			optionEl.value = options[optionEl.dataset.property];
 
-		optionEl.addEventListener('change', function () {
-			setSetting(this.dataset.property, this.value);
-		}, false);
+			optionEl.addEventListener('change', function () {
+				setSetting(this.dataset.property, this.value);
+			}, false);
+		} else if (optionEl.type == 'checkbox') {
+			optionEl.checked = options.ring;
+
+			optionEl.addEventListener('click', function () {
+				setSetting(this.dataset.property, (optionEl.checked ? 1 : 0));
+			});
+		}
 	}
 }, false);

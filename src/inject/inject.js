@@ -290,23 +290,38 @@
 			return false;
 		}
 
-		var priceLabels = document.querySelectorAll('.low-fare-selector ul li'),
+		var found = false,
+			tables = document.querySelectorAll('.low-fare-selector'),
+			dates1 = [],
+			dates2 = [],
 			price;
 
-		var found = false,
-			dates = [];
+		if (typeof tables[0] != 'undefined') {
+			var priceLabels = tables[0].querySelectorAll('ul li');
 
-		for (var i = 0; i < priceLabels.length; i++) {
-			if (parseInt(priceLabels[i].dataset.price) <= app.settings.minPrice) {
-				dates.push(priceLabels[i].dataset.date);
-				found = true;
+			for (var i = 0; i < priceLabels.length; i++) {
+				if (parseInt(priceLabels[i].dataset.price) <= app.settings.minPrice) {
+					dates1.push(priceLabels[i].dataset.date.replace(/\/\d+$/, ''));
+					found = true;
+				}
+			}
+		}
+
+		if (typeof tables[1] != 'undefined') {
+			var priceLabels = tables[1].querySelectorAll('ul li');
+
+			for (var i = 0; i < priceLabels.length; i++) {
+				if (parseInt(priceLabels[i].dataset.price) <= app.settings.minPrice) {
+					dates2.push(priceLabels[i].dataset.date.replace(/\/\d+$/, ''));
+					found = true;
+				}
 			}
 		}
 
 		if (found) {
 			this.alertFoundBook({
-				note1: dates.join(', '),
-				note2: ''
+				note1: dates1.join(', '),
+				note2: dates2.join(', ')
 			});
 
 			app.foundDelayReload();
