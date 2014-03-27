@@ -60,6 +60,34 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			province: getSetting('jetstar.province'),
 			postCode: getSetting('jetstar.postCode')
 		});
+	} else if (request.route == 'vietjet.fields') {
+		sendResponse({
+			gender: getSetting('vietjet.gender'),
+			lname: getSetting('vietjet.lname'),
+			fname: getSetting('vietjet.fname'),
+			addr: getSetting('vietjet.addr'),
+			city: getSetting('vietjet.city'),
+			email: getSetting('vietjet.email'),
+			mobile: getSetting('vietjet.mobile'),
+			day: getSetting('vietjet.day'),
+			month: getSetting('vietjet.month'),
+			year: getSetting('vietjet.year'),
+
+			gender2: getSetting('vietjet.gender2'),
+			lname2: getSetting('vietjet.lname2'),
+			fname2: getSetting('vietjet.fname2'),
+			mobile2: getSetting('vietjet.mobile2'),
+			day2: getSetting('vietjet.day2'),
+			month2: getSetting('vietjet.month2'),
+			year2: getSetting('vietjet.year2'),
+		});
+	} else if (request.route == 'vietjet.addons') {
+		sendResponse({
+			baggage11: getSetting('vietjet.baggage11'),
+			baggage12: getSetting('vietjet.baggage12'),
+			baggage21: getSetting('vietjet.baggage21'),
+			baggage22: getSetting('vietjet.baggage22')
+		});
 	}
 });
 

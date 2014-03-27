@@ -67,7 +67,10 @@
 		Airline.call(this);
 
 		this.routes = {
-			'_valueViewer': this._valueViewer
+			'_valueViewer': this._valueViewer,
+			'_travelOptions': this._travelOptions,
+			'_Detail': this._Detail,
+			'_addOn': this._addOn
 		};
 	}
 
@@ -82,6 +85,10 @@
 			route = '_valueViewer';
 		} else if (path.indexOf('TravelOptions.aspx') >= 0) {
 			route = '_travelOptions';
+		} else if (path.indexOf('Details.aspx') >= 0) {
+			route = '_Detail';
+		} else if (path.indexOf('AddOns.aspx') >= 0) {
+			route = '_addOn';
 		}
 
 		return route;
@@ -138,6 +145,114 @@
 		} else {
 			app.delayReload();
 		}
+	};
+
+	Vietjet.prototype._travelOptions = function () {
+		var app = App.getInstance();
+
+		if (!app.isOn()) {
+			return false;
+		}
+
+		var hours1 = [],
+			hours2 = [],
+			price,
+			matches,
+			found = false;
+
+		var priceTables = document.querySelectorAll('.FlightsGrid');
+
+		if (typeof priceTables[0] != 'undefined') {
+			var rows = priceTables[0].querySelectorAll('.FaresGrid td');
+
+			for (var i = 0; i < rows.length; i++) {
+				price = rows[i].textContent.replace(/,/g, '');
+
+				if (price <= app.settings.minPrice) {
+					matches = rows[i].parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('td td td').textContent.match(/\d+:\d+/);
+
+					if (matches) {
+						hours1.push(matches[0]);
+						found = true;
+					}
+				}
+			}
+		}
+
+		if (typeof priceTables[1] != 'undefined') {
+			var rows = priceTables[1].querySelectorAll('.FaresGrid td');
+
+			for (var i = 0; i < rows.length; i++) {
+				price = rows[i].textContent.replace(/,/g, '');
+
+				if (price <= app.settings.minPrice) {
+					matches = rows[i].parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('td td td').textContent.match(/\d+:\d+/);
+
+					if (matches) {
+						hours2.push(matches[0]);
+						found = true;
+					}
+				}
+			}
+		}
+
+		if (found) {
+			this.alertFoundBook({
+				note1: hours1.join(', '),
+				note2: hours2.join(', ')
+			});
+
+			app.foundDelayReload();
+		} else {
+			app.delayReload();
+		}
+	};
+
+	Vietjet.prototype._Detail = function () {
+		var app = App.getInstance();
+
+		app.sendMessage({
+			route: 'vietjet.fields'
+		}, function (fields) {
+			$('#txtPax1_Gender').val(fields.gender);
+			$('#txtPax1_LName').val(fields.lname);
+			$('#txtPax1_FName').val(fields.fname);
+			$('#txtPax1_Addr1').val(fields.addr);
+			$('#txtPax1_City').val(fields.city);
+			$('#txtPax1_Ctry').val(234).trigger('change');
+			$('#txtPax1_EMail').val(fields.email);
+			$('#txtPax1_DOB_Day').val(fields.day);
+			$('#txtPax1_DOB_Month').val(fields.month);
+			$('#txtPax1_DOB_Year').val(fields.year);
+			$('#txtPax1_Phone2').val(fields.mobile);
+			$('#txtPax1_Phone1').val(fields.mobile);
+
+			$('#txtPax2_Gender').val(fields.gender2);
+			$('#txtPax2_LName').val(fields.lname2);
+			$('#txtPax2_FName').val(fields.fname2);
+			$('#txtPax2_Phone1').val(fields.mobile2);
+			$('#txtPax2_DOB_Day').val(fields.day2);
+			$('#txtPax2_DOB_Month').val(fields.month2);
+			$('#txtPax2_DOB_Year').val(fields.year2);
+		});
+	};
+
+	Vietjet.prototype._addOn = function () {
+/*		var app = App.getInstance();
+
+		app.sendMessage({
+			route: 'vietjet.addons'
+		}, function (fields) {
+			setTimeout(function check() {
+				console.log(document.getElementById('lstPaxItem:-1:1:4'));
+
+				if (document.getElementById('lstPaxItem:-1:1:4')) {
+					console.log('hello');
+				} else {
+					setTimeout(check, 1000);
+				}
+			}, 0);
+		});*/
 	};
 
 	function JetStar() {
