@@ -11,12 +11,21 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	} else if (request.route == 'status') {
 		setStatus(sender.tab.id, request.status);
 	} else if (request.route == 'found') {
-		var items = [
-			{ title: 'Ngày đi:', message: request.note1 }
-		];
+		var items = [],
+			hasNote = false;
 
 		if (typeof request.note1 != 'undefined') {
+			items.push({ title: 'Ngày đi:', message: request.note1 });
+			hasNote = true;
+		}
+
+		if (typeof request.note2 != 'undefined') {
 			items.push({ title: 'Ngày về:', message: request.note2 });
+			hasNote = true;
+		}
+
+		if (!hasNote) {
+			items.push({title: '...', message: ''});
 		}
 
 		var notificationOption = {

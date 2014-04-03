@@ -328,7 +328,6 @@
 		} else {
 			app.delayReload();
 		}
-
 	};
 
 	JetStar.prototype._select = function () {
@@ -339,9 +338,22 @@
 		}
 		
 		var priceLabels = document.querySelectorAll('.field label'),
-			price;
+			price, found = false;
 
 		for (var i = 0; i < priceLabels.length; i++) {
+			var price = priceLabels[i].textContent.replace(/(VND|,|\s)/g, '');
+
+			if (price <= app.settings.minPrice) {
+				found = true;
+			}
+		}
+
+		if (found) {
+			this.alertFoundBook({});
+
+			app.foundDelayReload();
+		} else {
+			app.delayReload();
 		}
 	};
 
@@ -368,7 +380,9 @@
 			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListBirthDateYear_2').val(fields.yob2);
 
 			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_AdditionalBaggagePassengerView_AdditionalBaggageDropDownListJourney0').val(fields.baggage1);
+			$('select.add-baggage-each[data-dir="departing"]').val(fields.baggage1);
 			$('#ControlGroupPassengerView_PassengerInputViewPassengerView_AdditionalBaggagePassengerView_AdditionalBaggageDropDownListJourney1').val(fields.baggage2);
+			$('select.add-baggage-each[data-dir="returning"]').val(fields.baggage2);
 
 			$('#ControlGroupPassengerView_ContactInputViewPassengerView_DropDownListTitle').val(fields.title);
 			$('#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxFirstName').val(fields.lastName);
