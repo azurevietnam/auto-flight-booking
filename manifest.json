@@ -1,6 +1,6 @@
 {
 	"name":"Auto Flight Booking",
-	"version":"1.0.1",
+	"version":"1.0.3",
 	"manifest_version" : 2,
 
 	"description":"Ứng dụng trợ giúp mua vé máy bay VietJetAir, JetStar",
@@ -38,5 +38,6 @@
 			"matches":["https://ameliaweb5.intelisys.ca/*", "*://book.jetstar.com/*", "*://booknow.jetstar.com/*"],
 			"js":["js/jquery/jquery.min.js", "src/inject/inject.js"]
 		}
-	]
+	],
+	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

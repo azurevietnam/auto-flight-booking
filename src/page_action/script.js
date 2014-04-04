@@ -16,9 +16,9 @@ function updateToggleButton(status) {
 	var buttonHtml = '{text}';
 
 	if (status == 'on') {
-		buttonHtml = buttonHtml.replace('{text}', 'Tắt theo giõi giá vé');
+		buttonHtml = buttonHtml.replace('{text}', 'Tắt theo dõi giá vé');
 	} else {
-		buttonHtml = buttonHtml.replace('{text}', 'Bật theo giõi giá vé');
+		buttonHtml = buttonHtml.replace('{text}', 'Bật theo dõi giá vé');
 	}
 
 	document.querySelector('#toggle').innerHTML = buttonHtml;
