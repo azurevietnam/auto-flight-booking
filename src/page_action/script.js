@@ -51,6 +51,16 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 
+	document.getElementById('autocomplete-form').addEventListener('click', function () {
+		chrome.tabs.create({
+			url: 'src/autocomplete/index.html'
+		});
+
+		trackEvent('autocompleteButton', 'clicked');
+
+		window.close();
+	});
+
 	document.getElementById('chat').addEventListener('click', function () {
 		chrome.tabs.create({
 			url: 'src/chat/index.html'

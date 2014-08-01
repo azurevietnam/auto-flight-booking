@@ -1,0 +1,220 @@
+<form class="form-horizontal" role="form">
+  <fieldset ng-repeat="adult in adults">
+    <legend>Người lớn {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeAdult($index)">Xóa</button></legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Quý danh</label>
+      <div class="col-sm-10">
+        <select class="form-control" ng-model="adult.title">
+          <option value="">Chọn ...</option>
+          <option value="Mr">Ông</option>
+          <option value="Ms">Cô</option>
+          <option value="Mrs">Bà</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Họ</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="adult.lastName">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Tên đệm & tên</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="adult.firstName">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" ng-model="adult.address">Địa chỉ</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" ng-model="adult.province">Tỉnh</label>
+      <div class="col-sm-10">
+      <select class="form-control">
+        <option value="">Chọn ...</option>
+        <option value="SGN">Ho Chi Minh City</option>
+        <option value="HAN">Ha Noi</option>
+        <option value="DAD">Da Nang</option>
+        <option value="HUI">Hue</option>
+        <option value="AG">An Giang</option>
+        <option value="BRVT">Ba Ria - Vung Tau</option>
+        <option value="BL">Bac Lieu</option>
+        <option value="BK">Bac Kan</option>
+        <option value="BG">Bac Giang</option>
+        <option value="BN">Bac Ninh</option>
+        <option value="BT">Ben Tre</option>
+        <option value="BD">Binh Duong</option>
+        <option value="BDH">Binh Dinh</option>
+        <option value="BP">Binh Phuoc</option>
+        <option value="BTN">Binh Thuan</option>
+        <option value="CM">Ca Mau</option>
+        <option value="CB">Cao Bang</option>
+        <option value="CT">Can Tho</option>
+        <option value="DL">Dac Lak</option>
+        <option value="DN">Dac Nong</option>
+        <option value="DB">Dien Bien</option>
+        <option value="DNN">Dong Nai</option>
+        <option value="DT">Dong Thap</option>
+        <option value="GL">Gia Lai</option>
+        <option value="HG">Ha Giang</option>
+        <option value="HN">Ha Nam</option>
+        <option value="HT">Ha Tay</option>
+        <option value="HTT">Ha Tinh</option>
+        <option value="HD">Hai Duong</option>
+        <option value="HPH">Hai Phong</option>
+        <option value="HGG">Hau Giang</option>
+        <option value="HB">Hoa Binh</option>
+        <option value="HY">Hung Yen</option>
+        <option value="CXR">Khanh Hoa</option>
+        <option value="KG">Kien Giang</option>
+        <option value="KTT">Kon Tum</option>
+        <option value="LC">Lai Chau</option>
+        <option value="LD">Lam Dong</option>
+        <option value="LS">Lang Son</option>
+        <option value="LCC">Lao Cai</option>
+        <option value="LA">Long An</option>
+        <option value="ND">Nam Dinh</option>
+        <option value="VII">Nghe An</option>
+        <option value="NB">Ninh Binh</option>
+        <option value="NT">Ninh Thuan</option>
+        <option value="PT">Phu Tho</option>
+        <option value="PY">Phu Yen</option>
+        <option value="QB">Quang Binh</option>
+        <option value="QN">Quang Nam</option>
+        <option value="QNN">Quang Ngai</option>
+        <option value="QNI">Quang Ninh</option>
+        <option value="QT">Quang Tri</option>
+        <option value="ST">Soc Trang</option>
+        <option value="SL">Son La</option>
+        <option value="TN">Tay Ninh</option>
+        <option value="TB">Thai Binh</option>
+        <option value="THN">Thai Nguyen</option>
+        <option value="THH">Thanh Hoa</option>
+        <option value="TG">Tien Giang</option>
+        <option value="TV">Tra Vinh</option>
+        <option value="TQ">Tuyen Quang</option>
+        <option value="VL">Vinh Long</option>
+        <option value="VP">Vinh Phuc</option>
+        <option value="YB">Yen Bai</option>
+      </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" ng-model="adult.mobilePhone">Di động</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" ng-model="adult.email">Email</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+  </fieldset>
+  <fieldset ng-repeat="child in children">
+    <legend>Trẻ em {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeChild($index)">Xóa</button></legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" ng-model="child.title">Giới tính</label>
+      <div class="col-sm-10">
+          <select class="form-control">
+            <option value="">Chọn ...</option>
+            <option value="Master">Trai</option>
+            <option value="Miss">Gái</option>
+          </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" ng-model="child.lastName">Họ</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" ng-model="child.firstName">Tên đệm & tên</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" ng-model="child.mobilePhone">Di động</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+  </fieldset>  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="button" class="btn btn-success" ng-click="addAdult()">Thêm người lớn</button>
+      <button type="button" class="btn btn-success" ng-click="addChild()">Thêm trẻ em</button>
+    </div>
+  </div>
+  <fieldset>
+    <legend>Thanh toán</legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" ng-model="child.title">Phương thức</label>
+      <div class="col-sm-10">
+          <select class="form-control">
+            <option value="visa">VISA</option>
+          </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Mã thẻ</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="cardNumber" />
+      </div>
+    </div>   
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Tháng hết hạn</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="expiryMonth" placeholder="18" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Năm hết hạn</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="expiryYear" placeholder="2018" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">CVC</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="cardCVC" placeholder="123" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Chủ thẻ</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="cardName" placeholder="Nguyen Van A" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Địa chỉ</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="address" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="email" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Điện thoại</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="phone" />
+      </div>
+    </div>
+  </fieldset>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="generate()">Tạo đặt vé</button>
+      <a type="button" class="btn btn-default" ng-if="generatedCode" ng-href="{{generatedCode}}">Kéo vào thanh bookmark</a>
+    </div>
+  </div>
+</form>
