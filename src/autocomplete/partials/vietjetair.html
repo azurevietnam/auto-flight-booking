@@ -25,15 +25,15 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label" ng-model="adult.address">Địa chỉ</label>
+      <label class="col-sm-2 control-label">Địa chỉ</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" ng-model="adult.address">
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label" ng-model="adult.province">Tỉnh</label>
+      <label class="col-sm-2 control-label">Tỉnh</label>
       <div class="col-sm-10">
-      <select class="form-control">
+      <select class="form-control" ng-model="adult.province">
         <option value="">Chọn ...</option>
         <option value="SGN">Ho Chi Minh City</option>
         <option value="HAN">Ha Noi</option>
@@ -103,24 +103,24 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label" ng-model="adult.mobilePhone">Di động</label>
+      <label class="col-sm-2 control-label">Di động</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" ng-model="adult.mobilePhone">
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label" ng-model="adult.email">Email</label>
+      <label class="col-sm-2 control-label">Email</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" ng-model="adult.email">
       </div>
     </div>
   </fieldset>
   <fieldset ng-repeat="child in children">
     <legend>Trẻ em {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeChild($index)">Xóa</button></legend>
     <div class="form-group">
-      <label class="col-sm-2 control-label" ng-model="child.title">Giới tính</label>
+      <label class="col-sm-2 control-label">Giới tính</label>
       <div class="col-sm-10">
-          <select class="form-control">
+          <select class="form-control" ng-model="child.title">
             <option value="">Chọn ...</option>
             <option value="Master">Trai</option>
             <option value="Miss">Gái</option>
@@ -128,21 +128,21 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label" ng-model="child.lastName">Họ</label>
+      <label class="col-sm-2 control-label">Họ</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" ng-model="child.lastName">
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label" ng-model="child.firstName">Tên đệm & tên</label>
+      <label class="col-sm-2 control-label">Tên đệm & tên</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" ng-model="child.firstName">
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label" ng-model="child.mobilePhone">Di động</label>
+      <label class="col-sm-2 control-label">Di động</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" ng-model="child.mobilePhone">
       </div>
     </div>
   </fieldset>  
