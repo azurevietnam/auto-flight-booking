@@ -35,12 +35,12 @@ angular
 	      	  		"#child{{@index}}Firstname": "{{this.lastName}}",
 					"#child{{@index}}MobilePhone": "{{this.mobilePhone}}",
 	      	  		{{/each}}
-	      	  		"#cardNumber": "4450930000935358",
-	      	  		"#expiryMonth": "10",
-	      	  		"#expiryYear": "2016",
-	      	  		"#cardCVC": "061",
-	      	  		"#cardName": "TRINH THI QUYNH DUNG",
-	      	  		"#address": "Phuong 13 - Quan Tan Binh - Ho Chi Minh",
+	      	  		"#cardNumber": "{{cardNumber}}",
+	      	  		"#expiryMonth": "{{expiryMonth}}",
+	      	  		"#expiryYear": "{{expiryYear}}",
+	      	  		"#cardCVC": "{{cardCVC}}",
+	      	  		"#cardName": "{{cardName}}",
+	      	  		"#address": "{{Phuong 13 - Quan Tan Binh - Ho Chi Minh}}",
 	      	  		"#email": "quynhdungtrinh@gmail.com",
 	      	  		"#phone": "0909244812",
 	      	  		"#country": "VNM"
