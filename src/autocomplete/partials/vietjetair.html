@@ -1,5 +1,5 @@
 <form class="form-horizontal" role="form">
-  <fieldset ng-repeat="adult in adults">
+  <fieldset ng-repeat="adult in vietjet.adults">
     <legend>Người lớn {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeAdult($index)">Xóa</button></legend>
     <div class="form-group">
       <label class="col-sm-2 control-label">Quý danh</label>
@@ -115,7 +115,7 @@
       </div>
     </div>
   </fieldset>
-  <fieldset ng-repeat="child in children">
+  <fieldset ng-repeat="child in vietjet.children">
     <legend>Trẻ em {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeChild($index)">Xóa</button></legend>
     <div class="form-group">
       <label class="col-sm-2 control-label">Giới tính</label>
@@ -155,7 +155,7 @@
   <fieldset>
     <legend>Thanh toán</legend>
     <div class="form-group">
-      <label class="col-sm-2 control-label" ng-model="child.title">Phương thức</label>
+      <label class="col-sm-2 control-label" ng-model="vietjet.child.title">Phương thức</label>
       <div class="col-sm-10">
           <select class="form-control">
             <option value="visa">VISA</option>
@@ -165,49 +165,49 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Mã thẻ</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="cardNumber" />
+        <input type="text" class="form-control" ng-model="vietjet.cardNumber" />
       </div>
     </div>   
     <div class="form-group">
       <label class="col-sm-2 control-label">Tháng hết hạn</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="expiryMonth" placeholder="18" />
+        <input type="text" class="form-control" ng-model="vietjet.expiryMonth" placeholder="18" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">Năm hết hạn</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="expiryYear" placeholder="2018" />
+        <input type="text" class="form-control" ng-model="vietjet.expiryYear" placeholder="2018" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">CVC</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="cardCVC" placeholder="123" />
+        <input type="text" class="form-control" ng-model="vietjet.cardCVC" placeholder="123" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">Chủ thẻ</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="cardName" placeholder="Nguyen Van A" />
+        <input type="text" class="form-control" ng-model="vietjet.cardName" placeholder="Nguyen Van A" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">Địa chỉ</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="address" />
+        <input type="text" class="form-control" ng-model="vietjet.cardAddress" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">Email</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="email" />
+        <input type="text" class="form-control" ng-model="vietjet.cardEmail" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">Điện thoại</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="phone" />
+        <input type="text" class="form-control" ng-model="vietjet.cardPhone" />
       </div>
     </div>
   </fieldset>

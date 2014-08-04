@@ -9,9 +9,13 @@ angular
 	.config(function($compileProvider, $stateProvider, $urlRouterProvider) {
 		$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|javascript):/);
 
-	  $urlRouterProvider.otherwise("/vietjetair");
+	  $urlRouterProvider.otherwise("/index");
 
 	  $stateProvider
+	  	.state('index', {
+	  		url: '/index',
+	  		templateUrl: 'partials/index.html'
+	  	})
 	    .state('vietjetair', {
 	      url: "/vietjetair",
 	      templateUrl: "partials/vietjetair.html",
@@ -40,9 +44,9 @@ angular
 	      	  		"#expiryYear": "{{expiryYear}}",
 	      	  		"#cardCVC": "{{cardCVC}}",
 	      	  		"#cardName": "{{cardName}}",
-	      	  		"#address": "{{Phuong 13 - Quan Tan Binh - Ho Chi Minh}}",
-	      	  		"#email": "quynhdungtrinh@gmail.com",
-	      	  		"#phone": "0909244812",
+	      	  		"#address": "{{cardAddress}}",
+	      	  		"#email": "{{cardEmail}}",
+	      	  		"#phone": "{{cardPhone}}",
 	      	  		"#country": "VNM"
 	      	  	};
 
@@ -76,13 +80,24 @@ angular
 	      	*/});
 
 			var infoTemplate = Handlebars.compile(str);
+			$scope.vietjet = {
+				adults: [{}],
+				children: []
+			};
 
-	          $scope.adults = [{}];
+			try {
+				var vietjet = localStorage.getItem('vietjet') ? JSON.parse(localStorage.getItem('vietjet')) : {};
+			} catch (e) {
+				var vietjet = {};
+			}
+			
 
-	          $scope.children = [];
+			if (vietjet['adults']) {
+				$scope.vietjet = angular.extend($scope.vietjet, vietjet);
+			}
 
 	          $scope.addAdult = function () {
-	          	$scope.adults.push({});
+	          	$scope.vietjet.adults.push({});
 	          };
 
 	          $scope.removeAdult = function (index) {
@@ -90,7 +105,7 @@ angular
 	          };
 
 	          $scope.addChild = function () {
-	          	$scope.children.push({});
+	          	$scope.vietjet.children.push({});
 	          };
 
 	          $scope.removeChild = function (index) {
@@ -98,7 +113,9 @@ angular
 	          };
 
 	          $scope.generate = function () {
-	          	$scope.generatedCode = infoTemplate($scope);
+	          	localStorage.setItem('vietjet', JSON.stringify($scope.vietjet));
+
+	          	$scope.generatedCode = infoTemplate($scope.vietjet);
 	          };
 	      }
 	    })
