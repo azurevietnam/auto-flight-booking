@@ -3,72 +3,53 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Auto Flight Booking</title>
+		<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 		<link rel="stylesheet" href="style.css">
-		<style>
-			#buttons {
-				margin-bottom: 10px;
-			}
-
-			.secondary-buttons {
-				cursor: pointer;
-				float: right;
-			}
-
-			fieldset {
-				width: 600px;
-				border: 1px solid #dedede;
-			}
-
-			.control {
-				margin-bottom: 10px;
-			}
-
-			.control label {
-				display: inline-block;
-				width: 150px;
-			}
-
-			.control input {
-				padding: 5px;
-			}
-
-			.control .hint {
-				margin-top: 2px;
-				margin-left: 155px;
-				font-size: 11px;
-			}
-		</style>
 		<script src="/js/analytics.js"></script>
 		<script src="/js/defaults.js"></script>
-		<script src="script.js"></script>
+		<script src="/bower_components/angular/angular.min.js"></script>
+		<script src="app.js"></script>
 	</head>
 
-	<body>
-		<div class="secondary-buttons">
-			<a id="option" title="Tùy chọn"><img src="images/options.png" /></a>
-		</div>
-		<div id="buttons">
-			<button id="toggle"><span style="color: red;">Bạn hãy chọn tab đặt vé để bật theo dõi giá vé</span></button>
-			<button id="autocomplete-form">Nhập thông tin cá nhân</button>
-			<button id="chat">Chat với mọi người</button>
-		</div>
+	<body ng-app="app" ng-controller="Ctrl">
+		<div class="container" style="width: 500px;">
+			<div id="buttons">
+				<button id="autocomplete-form" class="btn btn-info btn-block">Nhập thông tin cá nhân</button>
+				<button id="chat" class="btn btn-info btn-block">Chat với mọi người</button>
+			</div>
 
-		<fieldset>
-			<legend>Theo dõi giá vé</legend>
-			<div class="control">
-				<label for="">Giá vé tối thiểu:</label>
-				<input type="number" class="option" data-property="minPrice" placeholder="500000" />
+			<div class="form-horizontal" style="margin-top: 20px;">
+				<fildset>
+					<legend>Theo dõi giá vé</legend>
+				</fieldset>
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label">Giá vé tối thiểu:</label>
+			    <div class="col-sm-10">
+			      <input type="number" class="form-control" ng-model="options.minPrice" />
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label">Thời gian kiểm tra lại:</label>
+			    <div class="col-sm-10">
+			      <input type="number" class="form-control" ng-model="options.reloadSecond" />
+			      <span class="help-block">Thời gian refresh lại trang giá vé (tính bằng giây)</span>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			      <div class="col-sm-offset-2 col-sm-10">
+			        <div class="checkbox">
+			          <label>
+			            <input type="checkbox" ng-model="options.ring"> Phát nhạc khi có vé rẻ
+			          </label>
+			        </div>
+			      </div>
+			    </div>
+			  <div class="form-group">
+			    <div class="col-sm-offset-2 col-sm-10">
+			    <button id="toggle" class="btn btn-info btn-block">Theo giõi giá vé</button>
+			    </div>
+			  </div>
 			</div>
-			<div class="control">
-				<label for="">Thời gian kiểm tra lại:</label>
-				<input type="number" class="option" data-property="reloadSecond" placeholder="10" />
-				<p class="hint">Thời gian refresh lại trang giá vé (tính bằng giây)</p>
-			</div>
-			<div class="control">
-				<label for="">Báo vé rẻ bằng nhạc:</label>
-				<input type="checkbox" class="option" data-property="ring" value="1" />
-			</div>
-		</fieldset>
-		<button style="float: right; margin-top: 10px;">Lưu lại</button>
+		</div>
 	</body>
 </html>

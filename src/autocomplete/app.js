@@ -25,8 +25,8 @@ angular
 	      	  	var passenger = {
 	      	  		{{#each adults}}
 	      	  		"#adult{{@index}}Title": "{{this.title}}",
-	      	  		"#adult{{@index}}Lastname": "{{this.firstName}}",
-	      	  		"#adult{{@index}}Firstname": "{{this.lastName}}",
+	      	  		"#adult{{@index}}Lastname": "{{this.lastName}}",
+	      	  		"#adult{{@index}}Firstname": "{{this.firstName}}",
 	      	  		"#adult{{@index}}Address": "{{this.address}}",
 	      	  		"#adult{{@index}}Country": "VNM",
 	      	  		"#adult{{@index}}ProState": "{{this.province}}",
@@ -35,8 +35,8 @@ angular
 	      	  		{{/each}}
 	      	  		{{#each children}}
 	      	  		"#child{{@index}}Title": "{{this.title}}",
-	      	  		"#child{{@index}}Lastname": "{{this.firstName}}",
-	      	  		"#child{{@index}}Firstname": "{{this.lastName}}",
+	      	  		"#child{{@index}}Lastname": "{{this.lastName}}",
+	      	  		"#child{{@index}}Firstname": "{{this.firstName}}",
 					"#child{{@index}}MobilePhone": "{{this.mobilePhone}}",
 	      	  		{{/each}}
 	      	  		"#cardNumber": "{{cardNumber}}",
@@ -101,7 +101,7 @@ angular
 	          };
 
 	          $scope.removeAdult = function (index) {
-
+	          	$scope.vietjet.adults.splice(index, 1);
 	          };
 
 	          $scope.addChild = function () {
@@ -109,7 +109,7 @@ angular
 	          };
 
 	          $scope.removeChild = function (index) {
-
+	          	$scope.vietjet.children.splice(index, 1);
 	          };
 
 	          $scope.generate = function () {

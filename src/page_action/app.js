@@ -1,3 +1,23 @@
+angular.module('app', [])
+	.controller('Ctrl', function ($scope) {
+		$scope.options = {
+			minPrice: 500000,
+			reloadSecond: 5,
+			ring: true
+		};
+
+		var storeOptions = localStorage.getItem('options');
+		storeOptions = storeOptions ? JSON.parse(storeOptions) : {};
+
+		$scope.options = angular.extend($scope.options, storeOptions);
+
+		$scope.$watch('options', function (val) {
+			console.log(val);
+
+			localStorage.setItem('options', JSON.stringify(val));
+		}, true);
+	});
+
 function setSetting(key, value) {
 	localStorage.setItem('store.settings.' + key, value);
 }
