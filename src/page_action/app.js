@@ -22,7 +22,7 @@ angular.module('app', [])
 			localStorage.setItem('options', JSON.stringify(val));
 		}, true);
 
-		$scope.buttonPriceWatcherText = 'Bạn hãy bật tab của hãng máy bay để theo dõi giá vé';
+		$scope.buttonPriceWatcherText = 'Bật theo dõi giá vé';
 
 		$scope.updateToggleButton = function (status) {
 			if (status == 'on') {
@@ -38,9 +38,13 @@ angular.module('app', [])
 					tab.id, {
 						route: "toggleStatus",
 					}, function(response) {
-						$scope.$apply(function () {
-							$scope.updateToggleButton(response.status);
-						});
+						if (response) {
+							$scope.$apply(function () {
+								$scope.updateToggleButton(response.status);
+							});
+						} else {
+							alert('Bạn hãy bật trang giá vé của hãng bay để kích hoạt chức năng theo dõi giá vé!');
+						}
 					}
 				);
 			});

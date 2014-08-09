@@ -2,9 +2,13 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Auto Flight Booking</title>
+		<title>Thiết lập theo dõi giá vé | Auto Flight Booking</title>
 		<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
-		<link rel="stylesheet" href="style.css">
+		<style>
+		body {
+			padding: 15px;
+		}
+		</style>
 		<script src="/js/analytics.js"></script>
 		<script src="/js/defaults.js"></script>
 		<script src="/bower_components/angular/angular.min.js"></script>
@@ -12,12 +16,12 @@
 	</head>
 
 	<body ng-app="app" ng-controller="Ctrl">
-		<div class="container" style="width: 500px;">
-			<div id="buttons">
-				<button class="btn btn-info btn-block" ng-click="openHelp()">Hướng dẫn sử dụng</button>
-				<button class="btn btn-info btn-block" ng-click="openAutocompleteForm()">Tạo mẫu thông tin cá nhân</button>
-				<button class="btn btn-info btn-block" ng-click="openChatbox()">Chat với mọi người</button>
-			</div>
+		<div class="container" style="width: 600px;">
+			<ul class="nav nav-pills">
+			  <li><a href="#" ng-click="openHelp()">Hướng dẫn sử dụng</a></li>
+			  <li><a href="#" ng-click="openAutocompleteForm()">Tự động nhập thông tin chuyến bay</a></li>
+			  <li><a href="#" ng-click="openChatbox()">Chat với mọi người</a></li>
+			</ul>
 
 			<div class="form-horizontal" style="margin-top: 20px;">
 				<fildset>
