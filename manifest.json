@@ -1,6 +1,6 @@
 {
 	"name":"Auto Flight Booking",
-	"version":"1.1.0",
+	"version":"1.1.1",
 	"manifest_version" : 2,
 
 	"description":"Ứng dụng trợ giúp mua vé máy bay VietJetAir, JetStar",
@@ -16,8 +16,6 @@
 		"scripts" : ["src/bg/background.js"],
 		"persistent": false
   	},
-
-	"options_page":"src/options_custom/index.html",
 
 	"browser_action":{
 		"default_icon": {
