@@ -35,7 +35,12 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			title: "Tìm thấy vé giá rẻ",
 			message: '',
 			iconUrl: "/icons/icon128.png",
-			items: items
+			items: items,
+			buttons: [
+				{
+					title: 'Hiển thị trang có vé rẻ'
+				}
+			]
 		};
 
 		if (getOption('ring')) {
@@ -43,18 +48,28 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			audio.src = 'sounds/found.ogg';
 			audio.play();
 
-			notificationOption.buttons = [
-				{
-					'title': 'Tắt nhạc'
-				}
-			];
-
-			chrome.notifications.onButtonClicked.addListener(function (notificationId, buttonIndex) {
-				if (notificationId == 'afb_found') {
-					audio.pause();
-				}
+			notificationOption.buttons.push({
+				'title': 'Tắt nhạc'
 			});
 		}
+
+		chrome.notifications.onButtonClicked.addListener(function (notificationId, buttonIndex) {
+			if (notificationId == 'afb_found') {
+				if (buttonIndex == 0) {
+					audio.pause();
+
+					chrome.windows.update(sender.tab.windowId, {
+						focused: true
+					}, function () {
+						chrome.tabs.update(sender.tab.id, {
+							selected: true
+						}, function () {});
+					});
+				} else if (buttonIndex == 1) {
+					audio.pause();					
+				}
+			}
+		});
 
 		chrome.notifications.clear('afb_found', function () {
 			chrome.notifications.create('afb_found', notificationOption, function () {
