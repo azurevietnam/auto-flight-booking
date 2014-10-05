@@ -22,57 +22,59 @@ angular
 	      controller: function($scope, $compile) {
 	      	var str = hereDoc(function() {/*!
 	      	  javascript:(function () {
-	      	  	var passenger = {
-	      	  		{{#each adults}}
-	      	  		"#adult{{@index}}Title": "{{this.title}}",
-	      	  		"#adult{{@index}}Lastname": "{{this.lastName}}",
-	      	  		"#adult{{@index}}Firstname": "{{this.firstName}}",
-	      	  		"#adult{{@index}}Address": "{{this.address}}",
-	      	  		"#adult{{@index}}Country": "VNM",
-	      	  		"#adult{{@index}}ProState": "{{this.province}}",
-	      	  		"#adult{{@index}}MobilePhone": "{{this.mobilePhone}}",
-	      	  		"#adult{{@index}}Email": "{{this.email}}",
-	      	  		{{/each}}
-	      	  		{{#each children}}
-	      	  		"#child{{@index}}Title": "{{this.title}}",
-	      	  		"#child{{@index}}Lastname": "{{this.lastName}}",
-	      	  		"#child{{@index}}Firstname": "{{this.firstName}}",
-					"#child{{@index}}MobilePhone": "{{this.mobilePhone}}",
-	      	  		{{/each}}
-	      	  		"#cardNumber": "{{cardNumber}}",
-	      	  		"#expiryMonth": "{{expiryMonth}}",
-	      	  		"#expiryYear": "{{expiryYear}}",
-	      	  		"#cardCVC": "{{cardCVC}}",
-	      	  		"#cardName": "{{cardName}}",
-	      	  		"#address": "{{cardAddress}}",
-	      	  		"#email": "{{cardEmail}}",
-	      	  		"#phone": "{{cardPhone}}",
-	      	  		"#country": "VNM"
-	      	  	};
+	      	  	if (document.domain == 'm.vietjetair.com') {
+		      	  	var passenger = {
+		      	  		{{#each adults}}
+		      	  		"#adult{{@index}}Title": "{{this.title}}",
+		      	  		"#adult{{@index}}Lastname": "{{this.lastName}}",
+		      	  		"#adult{{@index}}Firstname": "{{this.firstName}}",
+		      	  		"#adult{{@index}}Address": "{{this.address}}",
+		      	  		"#adult{{@index}}Country": "VNM",
+		      	  		"#adult{{@index}}ProState": "{{this.province}}",
+		      	  		"#adult{{@index}}MobilePhone": "{{this.mobilePhone}}",
+		      	  		"#adult{{@index}}Email": "{{this.email}}",
+		      	  		{{/each}}
+		      	  		{{#each children}}
+		      	  		"#child{{@index}}Title": "{{this.title}}",
+		      	  		"#child{{@index}}Lastname": "{{this.lastName}}",
+		      	  		"#child{{@index}}Firstname": "{{this.firstName}}",
+						"#child{{@index}}MobilePhone": "{{this.mobilePhone}}",
+		      	  		{{/each}}
+		      	  		"#cardNumber": "{{cardNumber}}",
+		      	  		"#expiryMonth": "{{expiryMonth}}",
+		      	  		"#expiryYear": "{{expiryYear}}",
+		      	  		"#cardCVC": "{{cardCVC}}",
+		      	  		"#cardName": "{{cardName}}",
+		      	  		"#address": "{{cardAddress}}",
+		      	  		"#email": "{{cardEmail}}",
+		      	  		"#phone": "{{cardPhone}}",
+		      	  		"#country": "VNM"
+		      	  	};
 
-	      	  	if ($('#adult0Title').length) {
-	      	  		for (var selector in passenger) {
-	      	  			$(selector).val(passenger[selector]);
-	      	  		}
+		      	  	if ($('#adult0Title').length) {
+		      	  		for (var selector in passenger) {
+		      	  			$(selector).val(passenger[selector]);
+		      	  		}
 
-	      	  		$('[type="submit"]').trigger('click');
-	      	  	}
+		      	  		$('[type="submit"]').trigger('click');
+		      	  	}
 
-	      	  	if ($('#addOn_adult_0_flight_outbound_1').length) {
-	      	  		$('[type="submit"]').trigger('click');
-	      	  	}
+		      	  	if ($('#addOn_adult_0_flight_outbound_1').length) {
+		      	  		$('[type="submit"]').trigger('click');
+		      	  	}
 
-	      	  	if ($('#paymentInfo').length) {
-	      	  		if ($('#paymentInfo').is(':hidden')) {
-	      	  			$('[value="visaCard"]').next().trigger('click');
-	      	  		} else {
-	      	  			for (var selector in passenger) {
-	      	  				$(selector).val(passenger[selector]);
-	      	  			}		
-	      	  			
-	      	  			$('[type="checkbox"]').trigger('click');
-	      	  			$('[type="submit"]').trigger('click');
-	      	  		}
+		      	  	if ($('#paymentInfo').length) {
+		      	  		if ($('#paymentInfo').is(':hidden')) {
+		      	  			$('[value="visaCard"]').next().trigger('click');
+		      	  		} else {
+		      	  			for (var selector in passenger) {
+		      	  				$(selector).val(passenger[selector]);
+		      	  			}		
+		      	  			
+		      	  			$('[type="checkbox"]').trigger('click');
+		      	  			$('[type="submit"]').trigger('click');
+		      	  		}
+		      	  	}
 	      	  	}
 
 	      	  	return false;
@@ -114,6 +116,17 @@ angular
 
 	          $scope.generate = function () {
 	          	localStorage.setItem('vietjet', JSON.stringify($scope.vietjet));
+
+	          	// Reindex for desktop web
+	          	var index = 1;
+	          	$scope.vietjet.adults.forEach(function (val) {
+	          		val.index = index++;
+	          	});
+
+	          	index = 1;
+	          	$scope.vietjet.children.forEach(function (val) {
+	          		val.index = index++;
+	          	});
 
 	          	$scope.generatedCode = infoTemplate($scope.vietjet);
 	          };
