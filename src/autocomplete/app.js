@@ -5,7 +5,7 @@ function hereDoc(f) {
 }
 
 angular
-	.module('app', ['ui.router'])
+	.module('app', ['ui.router', 'ui.bootstrap'])
 	.config(function($compileProvider, $stateProvider, $urlRouterProvider) {
 		$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|javascript):/);
 
@@ -20,6 +20,12 @@ angular
 	      url: "/vietjetair",
 	      templateUrl: "partials/vietjetair.html",
 	      controller: function($scope, $compile) {
+	      	$scope.titleOptions = {
+	      		'Mr': 'Ông',
+	      		'Mrs': 'Bà',
+	      		'Ms': 'Cô'
+	      	};
+
 	      	var str = hereDoc(function() {/*!
 	      	  javascript:(function () {
 	      	  	if (document.domain == 'm.vietjetair.com') {
@@ -115,20 +121,13 @@ angular
 	          };
 
 	          $scope.generate = function () {
-	          	localStorage.setItem('vietjet', JSON.stringify($scope.vietjet));
+	          	if (!$scope.form.$invalid) {
+	          		localStorage.setItem('vietjet', JSON.stringify($scope.vietjet));
 
-	          	// Reindex for desktop web
-	          	var index = 1;
-	          	$scope.vietjet.adults.forEach(function (val) {
-	          		val.index = index++;
-	          	});
+	          		$scope.generatedCode = infoTemplate($scope.vietjet);
+	          	}
 
-	          	index = 1;
-	          	$scope.vietjet.children.forEach(function (val) {
-	          		val.index = index++;
-	          	});
 
-	          	$scope.generatedCode = infoTemplate($scope.vietjet);
 	          };
 	      }
 	    })
