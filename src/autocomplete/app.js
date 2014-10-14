@@ -58,8 +58,49 @@ angular
 	      	  		$('.button')[0].click();
 	      	  	}
 
-	      	  	if ($('#addOn_adult_0_flight_outbound_1').length) {
-	      	  		$('[type="submit"]').trigger('click');
+	      	  	if (document.getElementById('lstPaxItem:-1:1:12')) {
+	      	  		var adults = {{{json adults}}},
+	      	  			children = {{{json children}}},
+	      	  			passengerIndex = 1;
+	      	  			bagIndex = 12;
+
+					adults.forEach(function (adult) {
+						var bag1El = document.getElementById('lstPaxItem:-'+ passengerIndex +':1:' + bagIndex),
+							bag2El;
+
+						bag1El.selectedIndex = adult.bag1;
+						$(bag1El).trigger('change');
+
+						bagIndex += 14;
+
+						bag2El = document.getElementById('lstPaxItem:-'+ passengerIndex +':2:' + bagIndex);
+
+						bag2El.selectedIndex = adult.bag2;
+						$(bag2El).trigger('change');
+
+						bagIndex += 14;
+						passengerIndex++;
+					});
+
+					if (Array.isArray(children)) {
+						children.forEach(function (child) {
+							var bag1El = document.getElementById('lstPaxItem:-'+ passengerIndex +':1:' + bagIndex),
+								bag2El;
+
+							bag1El.selectedIndex = child.bag1;
+							$(bag1El).trigger('change');
+
+							bagIndex += 14;
+
+							bag2El = document.getElementById('lstPaxItem:-'+ passengerIndex +':2:' + bagIndex);
+
+							bag2El.selectedIndex = child.bag2;
+							$(bag2El).trigger('change');
+
+							bagIndex += 14;
+							passengerIndex++;
+						});
+					}
 	      	  	}
 
 	      	  	if ($('#paymentInfo').length) {
@@ -77,6 +118,10 @@ angular
 	      	  	return false;
 	      	  })();
 	      	*/});
+
+			Handlebars.registerHelper('json', function(context) {
+			    return JSON.stringify(context);
+			});
 
 			var infoTemplate = Handlebars.compile(str);
 			$scope.vietjet = {
