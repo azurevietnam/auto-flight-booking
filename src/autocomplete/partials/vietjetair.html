@@ -1,4 +1,16 @@
 <form name="form" class="form-horizontal" role="form">
+  <fieldset>
+    <legend>Thông tin chuyến bay</legend>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Chuyến bay</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="vietjet.direction">
+            <option value="2">Khứ hồi</option>
+            <option value="1">Một chiều</option>
+          </select>
+        </div>
+      </div>
+  </fieldset>
   <fieldset ng-repeat="adult in vietjet.adults">
       <legend>Người lớn {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeAdult($index)">Xóa</button></legend>
       <div class="form-group">
@@ -57,7 +69,7 @@
           </select>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-if="vietjet.direction == 2">
         <label class="col-sm-2 control-label">Hành lí chiều về</label>
         <div class="col-sm-10">
           <select class="form-control" ng-model="adult.bag2">
@@ -92,7 +104,7 @@
           </select>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-if="vietjet.direction == 2">
         <label class="col-sm-2 control-label">Hành lí chiều về</label>
         <div class="col-sm-10">
           <select class="form-control" ng-model="child.bag2">
@@ -109,6 +121,10 @@
       <button type="button" class="btn btn-success" ng-click="addChild()">Thêm trẻ em</button>
     </div>
   </div>
+  <fieldset>
+    <legend>Chọn chỗ ngồi</legend>
+    <span class="help-block">Lưu ý: Tại bước đặt ghế ngồi, bạn phải tự chọn ghế.</span>
+  </fieldset>
   <fieldset>
     <legend>Thanh toán</legend>
     <div class="form-group">
@@ -128,7 +144,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Tháng hết hạn</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="vietjet.expiryMonth" placeholder="12" />
+        <input type="text" class="form-control" ng-model="vietjet.expiryMonth" placeholder="07" />
       </div>
     </div>
     <div class="form-group">
@@ -140,7 +156,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">CVC</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="vietjet.cardCVC" placeholder="123" />
+        <input type="text" class="form-control" ng-model="vietjet.cardCVC" placeholder="023" />
       </div>
     </div>
     <div class="form-group">
@@ -156,9 +172,9 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">Email</label>
+      <label class="col-sm-2 control-label">Thành phố</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="vietjet.cardEmail" />
+        <input type="text" class="form-control" ng-model="vietjet.cardCity" />
       </div>
     </div>
     <div class="form-group">

@@ -39,15 +39,13 @@ angular
 	      	  		"#txtPax{{this.index}}_LName": "{{this.lastName}}",
 	      	  		"#txtPax{{this.index}}_FName": "{{this.firstName}}",
 	      	  		{{/each}}
-	      	  		"#cardNumber": "{{cardNumber}}",
-	      	  		"#expiryMonth": "{{expiryMonth}}",
-	      	  		"#expiryYear": "{{expiryYear}}",
-	      	  		"#cardCVC": "{{cardCVC}}",
-	      	  		"#cardName": "{{cardName}}",
-	      	  		"#address": "{{cardAddress}}",
-	      	  		"#email": "{{cardEmail}}",
-	      	  		"#phone": "{{cardPhone}}",
-	      	  		"#country": "VNM"
+	      	  		"#txtCardNo": "{{cardNumber}}",
+	      	  		"#txtCVC": "{{cardCVC}}",
+	      	  		"#txtCardholder": "{{cardName}}",
+	      	  		"#txtAddr1": "{{cardAddress}}",
+	      	  		"#txtPhone": "{{cardPhone}}",
+	      	  		"#txtCity": "{{cardCity}}",
+	      	  		"#lstCtry": "234"
 	      	  	};
 
 	      	  	if ($('#txtPax1_Gender').length) {
@@ -61,6 +59,7 @@ angular
 	      	  	if (document.getElementById('lstPaxItem:-1:1:12')) {
 	      	  		var adults = {{{json adults}}},
 	      	  			children = {{{json children}}},
+	      	  			direction = {{direction}},
 	      	  			passengerIndex = 1;
 	      	  			bagIndex = 12;
 
@@ -71,12 +70,14 @@ angular
 						bag1El.selectedIndex = adult.bag1;
 						$(bag1El).trigger('change');
 
-						bagIndex += 14;
+						if (direction == 2) {
+							bagIndex += 14;
 
-						bag2El = document.getElementById('lstPaxItem:-'+ passengerIndex +':2:' + bagIndex);
+							bag2El = document.getElementById('lstPaxItem:-'+ passengerIndex +':2:' + bagIndex);
 
-						bag2El.selectedIndex = adult.bag2;
-						$(bag2El).trigger('change');
+							bag2El.selectedIndex = adult.bag2;
+							$(bag2El).trigger('change');
+						}
 
 						bagIndex += 14;
 						passengerIndex++;
@@ -90,31 +91,45 @@ angular
 							bag1El.selectedIndex = child.bag1;
 							$(bag1El).trigger('change');
 
-							bagIndex += 14;
+							if (direction == 2) {
+								bagIndex += 14;
 
-							bag2El = document.getElementById('lstPaxItem:-'+ passengerIndex +':2:' + bagIndex);
+								bag2El = document.getElementById('lstPaxItem:-'+ passengerIndex +':2:' + bagIndex);
 
-							bag2El.selectedIndex = child.bag2;
-							$(bag2El).trigger('change');
+								bag2El.selectedIndex = child.bag2;
+								$(bag2El).trigger('change');
+							}
 
 							bagIndex += 14;
 							passengerIndex++;
 						});
 					}
+
+					$('.button')[0].click();
 	      	  	}
 
-	      	  	if ($('#paymentInfo').length) {
-	      	  		if ($('#paymentInfo').is(':hidden')) {
-	      	  			$('[value="visaCard"]').next().trigger('click');
-	      	  		} else {
-	      	  			for (var selector in passenger) {
-	      	  				$(selector).val(passenger[selector]);
-	      	  			}		
-	      	  			
-	      	  			$('[type="checkbox"]').trigger('click');
-	      	  			$('[type="submit"]').trigger('click');
-	      	  		}
+	      	  	if ($('#paymentSection').length) {
+					$('img[src="images/merchvisa2.gif"]')[0].click();
+
+	      	  		var expiryDate = '{{expiryYear}}/{{expiryMonth}}';
+					
+	      	  		var index = $('#dlstExpiry').find('option[value^="'+ expiryDate +'"]').index();
+
+					$('#dlstExpiry')[0].selectedIndex = index;
+
+      	  			for (var selector in passenger) {
+      	  				$(selector).val(passenger[selector]);
+      	  			}
+      	  			
+      	  			$('.button')[0].click();
 	      	  	}
+				
+				if ($('#chkIAgree').length) {
+					$('#chkIAgree')[0].checked = true;
+
+					$('.button')[1].click();
+				}
+
 	      	  	return false;
 	      	  })();
 	      	*/});
