@@ -1,158 +1,119 @@
-<form name="form" class="form-horizontal" role="form" ng-init="formData = {submitted: false}">
-  <fieldset ng-repeat="adult in vietjet.adults" ng-form="adultForm">
-      <legend>Người lớn {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeAdult($index)">Xóa</button></legend>
-      <div class="form-group" ng-class="{'has-error': (formData.submitted || !adultForm.title.$pristine) && adultForm.title.$invalid}">
-        <label class="col-sm-2 control-label">Quý danh</label>
+<form name="form" class="form-horizontal" role="form">
+  <fieldset>
+    <legend>Thông tin chuyến bay</legend>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Chuyến bay</label>
         <div class="col-sm-10">
-          <select class="form-control" name="title" ng-model="adult.title" ng-options="key as value for (key , value) in titleOptions" required>
-            <option value="">Chọn ...</option>
+          <select class="form-control" ng-model="vietjet.direction">
+            <option value="2">Khứ hồi</option>
+            <option value="1">Một chiều</option>
           </select>
-          <p ng-show="(formData.submitted || !adultForm.title.$pristine) && adultForm.title.$invalid" class="help-block">Quý danh bắt buộc phải nhập.</p>
-        </div>
-      </div>
-      <div class="form-group" ng-class="{'has-error': (formData.submitted || !adultForm.lastName.$pristine) && adultForm.lastName.$invalid}">
-        <label class="col-sm-2 control-label">Họ</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="lastName" ng-model="adult.lastName" required>
-          <p ng-show="(formData.submitted || !adultForm.lastName.$pristine) && adultForm.lastName.$invalid" class="help-block">Họ bắt buộc phải nhập.</p>
-        </div> 
-      </div>
-      <div class="form-group" ng-class="{'has-error': (formData.submitted || !adultForm.firstName.$pristine) && adultForm.firstName.$invalid}">
-        <label class="col-sm-2 control-label">Tên đệm & tên</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="firstName" ng-model="adult.firstName" required>
-          <p ng-show="(formData.submitted || !adultForm.firstName.$pristine) && adultForm.firstName.$invalid" class="help-block">Tên bắt buộc phải nhập.</p>
-        </div>
-      </div>
-      <div class="form-group" ng-class="{'has-error': (formData.submitted || !adultForm.address.$pristine) && adultForm.address.$invalid}">
-        <label class="col-sm-2 control-label">Địa chỉ</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="address" ng-model="adult.address" required>
-          <p ng-show="(formData.submitted || !adultForm.address.$pristine) && adultForm.address.$invalid" class="help-block">Địa chỉ bắt buộc phải nhập.</p>
-        </div>
-      </div>
-      <div class="form-group" ng-class="{'has-error': (formData.submitted || !adultForm.province.$pristine) && adultForm.province.$invalid}">
-        <label class="col-sm-2 control-label">Tỉnh</label>
-        <div class="col-sm-10">
-        <select class="form-control" name="province" ng-model="adult.province" required>
-          <option value="">Chọn ...</option>
-          <option value="SGN">Ho Chi Minh City</option>
-          <option value="HAN">Ha Noi</option>
-          <option value="DAD">Da Nang</option>
-          <option value="HUI">Hue</option>
-          <option value="AG">An Giang</option>
-          <option value="BRVT">Ba Ria - Vung Tau</option>
-          <option value="BL">Bac Lieu</option>
-          <option value="BK">Bac Kan</option>
-          <option value="BG">Bac Giang</option>
-          <option value="BN">Bac Ninh</option>
-          <option value="BT">Ben Tre</option>
-          <option value="BD">Binh Duong</option>
-          <option value="BDH">Binh Dinh</option>
-          <option value="BP">Binh Phuoc</option>
-          <option value="BTN">Binh Thuan</option>
-          <option value="CM">Ca Mau</option>
-          <option value="CB">Cao Bang</option>
-          <option value="CT">Can Tho</option>
-          <option value="DL">Dac Lak</option>
-          <option value="DN">Dac Nong</option>
-          <option value="DB">Dien Bien</option>
-          <option value="DNN">Dong Nai</option>
-          <option value="DT">Dong Thap</option>
-          <option value="GL">Gia Lai</option>
-          <option value="HG">Ha Giang</option>
-          <option value="HN">Ha Nam</option>
-          <option value="HT">Ha Tay</option>
-          <option value="HTT">Ha Tinh</option>
-          <option value="HD">Hai Duong</option>
-          <option value="HPH">Hai Phong</option>
-          <option value="HGG">Hau Giang</option>
-          <option value="HB">Hoa Binh</option>
-          <option value="HY">Hung Yen</option>
-          <option value="CXR">Khanh Hoa</option>
-          <option value="KG">Kien Giang</option>
-          <option value="KTT">Kon Tum</option>
-          <option value="LC">Lai Chau</option>
-          <option value="LD">Lam Dong</option>
-          <option value="LS">Lang Son</option>
-          <option value="LCC">Lao Cai</option>
-          <option value="LA">Long An</option>
-          <option value="ND">Nam Dinh</option>
-          <option value="VII">Nghe An</option>
-          <option value="NB">Ninh Binh</option>
-          <option value="NT">Ninh Thuan</option>
-          <option value="PT">Phu Tho</option>
-          <option value="PY">Phu Yen</option>
-          <option value="QB">Quang Binh</option>
-          <option value="QN">Quang Nam</option>
-          <option value="QNN">Quang Ngai</option>
-          <option value="QNI">Quang Ninh</option>
-          <option value="QT">Quang Tri</option>
-          <option value="ST">Soc Trang</option>
-          <option value="SL">Son La</option>
-          <option value="TN">Tay Ninh</option>
-          <option value="TB">Thai Binh</option>
-          <option value="THN">Thai Nguyen</option>
-          <option value="THH">Thanh Hoa</option>
-          <option value="TG">Tien Giang</option>
-          <option value="TV">Tra Vinh</option>
-          <option value="TQ">Tuyen Quang</option>
-          <option value="VL">Vinh Long</option>
-          <option value="VP">Vinh Phuc</option>
-          <option value="YB">Yen Bai</option>
-        </select>
-        <p ng-show="(formData.submitted || !adultForm.province.$pristine) && adultForm.province.$invalid" class="help-block">Tỉnh bắt buộc phải nhập.</p>
-        </div>
-      </div>
-      <div class="form-group" ng-class="{'has-error': (formData.submitted || !adultForm.mobilePhone.$pristine) && adultForm.mobilePhone.$invalid}">
-        <label class="col-sm-2 control-label">Di động</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="mobilePhone" ng-model="adult.mobilePhone" required>
-          <p ng-show="(formData.submitted || !adultForm.mobilePhone.$pristine) && adultForm.mobilePhone.$invalid" class="help-block">Họ bắt buộc phải nhập.</p>
-        </div>
-      </div>
-      <div class="form-group" ng-class="{'has-error': (formData.submitted || !adultForm.email.$pristine) && adultForm.email.$invalid}">
-        <label class="col-sm-2 control-label">Email</label>
-        <div class="col-sm-10">
-          <input type="email" class="form-control" name="email" ng-model="adult.email" required>
-          <p ng-show="(formData.submitted || !adultForm.email.$pristine) && adultForm.email.$error.required" class="help-block">Email bắt buộc phải nhập.</p>
-          <p ng-show="adultForm.email.$error.email" class="help-block">Email nhập không đúng.</p>
         </div>
       </div>
   </fieldset>
-  <fieldset ng-repeat="child in vietjet.children" ng-form="childForm">
-    <legend>Trẻ em {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeChild($index)">Xóa</button></legend>
-    <div class="form-group" ng-class="{'has-error': (formData.submitted || !childForm.title.$pristine) && childForm.title.$invalid}">
-      <label class="col-sm-2 control-label">Giới tính</label>
-      <div class="col-sm-10">
-          <select class="form-control" name="title" ng-model="child.title" required>
-            <option value="">Chọn ...</option>
-            <option value="Master">Trai</option>
-            <option value="Miss">Gái</option>
+  <fieldset ng-repeat="adult in vietjet.adults">
+      <legend>Người lớn {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeAdult($index)">Xóa</button></legend>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Quý danh</label>
+        <div class="col-sm-10">
+          <select class="form-control" name="gender" ng-model="adult.gender" required>
+            <option value=""></option>
+            <option value="M">Ông</option>
+            <option value="F">Bà/Cô</option>
           </select>
-          <p ng-show="(formData.submitted || !childForm.title.$pristine) && childForm.title.$invalid" class="help-block">Giới tính bắt buộc phải nhập.</p>
+        </div>
       </div>
-    </div>
-    <div class="form-group" ng-class="{'has-error': (formData.submitted || !childForm.lastName.$pristine) && childForm.lastName.$invalid}">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Họ</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="lastName" ng-model="adult.lastName" placeholder="Nguyen">
+        </div> 
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Tên đệm & tên</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="firstName" ng-model="adult.firstName" placeholder="Thi Bao Thu">
+        </div>
+      </div>
+      <div class="form-group" ng-if="$index < 1">
+        <label class="col-sm-2 control-label">Địa chỉ</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="address" ng-model="adult.address" required>
+        </div>
+      </div>
+      <div class="form-group" ng-if="$index < 1">
+        <label class="col-sm-2 control-label">Tỉnh</label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" name="province" ng-model="adult.province" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Di động</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="mobilePhone" ng-model="adult.mobilePhone" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control" name="email" ng-model="adult.email" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Hành lí chiều đi</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="adult.bag1">
+            <option value="0">Không</option>
+            <option value="1">Giói 15kgs</option>
+            <option value="2">Gói 20kgs</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" ng-if="vietjet.direction == 2">
+        <label class="col-sm-2 control-label">Hành lí chiều về</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="adult.bag2">
+            <option value="0">Không</option>
+            <option value="1">Giói 15kgs</option>
+            <option value="2">Gói 20kgs</option>
+          </select>
+        </div>
+      </div>
+  </fieldset>
+  <fieldset ng-repeat="child in vietjet.children">
+    <legend>Trẻ em {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeChild($index)">Xóa</button></legend>
+    <div class="form-group">
       <label class="col-sm-2 control-label">Họ</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" name="lastName" ng-model="child.lastName" required>
-        <p ng-show="(formData.submitted || !childForm.lastName.$pristine) && childForm.lastName.$invalid" class="help-block">Họ bắt buộc phải nhập.</p>
-      </div>
-    </div>
-    <div class="form-group" ng-class="{'has-error': (formData.submitted || !childForm.firstName.$pristine) && childForm.firstName.$invalid}">
-      <label class="col-sm-2 control-label">Tên đệm & tên</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" name="firstName" ng-model="child.firstName" required>
-        <p ng-show="(formData.submitted || !childForm.firstName.$pristine) && childForm.firstName.$invalid" class="help-block">Giới tính bắt buộc phải nhập.</p>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">Di động</label>
+      <label class="col-sm-2 control-label">Tên đệm & tên</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="child.mobilePhone">
+        <input type="text" class="form-control" name="firstName" ng-model="child.firstName" required>
       </div>
     </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Hành lí chiều đi</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="child.bag1">
+            <option value="0">Không</option>
+            <option value="1">Giói 15kgs</option>
+            <option value="2">Gói 20kgs</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" ng-if="vietjet.direction == 2">
+        <label class="col-sm-2 control-label">Hành lí chiều về</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="child.bag2">
+            <option value="0">Không</option>
+            <option value="1">Giói 15kgs</option>
+            <option value="2">Gói 20kgs</option>
+          </select>
+        </div>
+      </div>
   </fieldset>  
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
@@ -160,6 +121,10 @@
       <button type="button" class="btn btn-success" ng-click="addChild()">Thêm trẻ em</button>
     </div>
   </div>
+  <fieldset>
+    <legend>Chọn chỗ ngồi</legend>
+    <span class="help-block">Lưu ý: Tại bước đặt ghế ngồi, bạn phải tự chọn ghế.</span>
+  </fieldset>
   <fieldset>
     <legend>Thanh toán</legend>
     <div class="form-group">
@@ -179,7 +144,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Tháng hết hạn</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="vietjet.expiryMonth" placeholder="12" />
+        <input type="text" class="form-control" ng-model="vietjet.expiryMonth" placeholder="07" />
       </div>
     </div>
     <div class="form-group">
@@ -191,7 +156,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">CVC</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="vietjet.cardCVC" placeholder="123" />
+        <input type="text" class="form-control" ng-model="vietjet.cardCVC" placeholder="023" />
       </div>
     </div>
     <div class="form-group">
@@ -207,9 +172,9 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">Email</label>
+      <label class="col-sm-2 control-label">Thành phố</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="vietjet.cardEmail" />
+        <input type="text" class="form-control" ng-model="vietjet.cardCity" />
       </div>
     </div>
     <div class="form-group">
@@ -221,7 +186,7 @@
   </fieldset>
   <div class="form-group">
     <div class="col-sm-12">
-      <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="formData.submitted = true; generate();">Tạo đặt vé</button>
+      <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="generate();">Tạo đặt vé</button>
       <a type="button" style="margin-top: 10px; cursor: move;" class="btn btn-lg btn-success btn-block" ng-if="generatedCode" ng-href="{{generatedCode}}">Kéo vào thanh bookmark</a>
     </div>
   </div>

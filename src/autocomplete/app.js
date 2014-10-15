@@ -20,72 +20,123 @@ angular
 	      url: "/vietjetair",
 	      templateUrl: "partials/vietjetair.html",
 	      controller: function($scope, $compile) {
-	      	$scope.titleOptions = {
-	      		'Mr': 'Ông',
-	      		'Mrs': 'Bà',
-	      		'Ms': 'Cô'
-	      	};
-
 	      	var str = hereDoc(function() {/*!
 	      	  javascript:(function () {
-	      	  	if (document.domain == 'm.vietjetair.com') {
-		      	  	var passenger = {
-		      	  		{{#each adults}}
-		      	  		"#adult{{@index}}Title": "{{this.title}}",
-		      	  		"#adult{{@index}}Lastname": "{{this.lastName}}",
-		      	  		"#adult{{@index}}Firstname": "{{this.firstName}}",
-		      	  		"#adult{{@index}}Address": "{{this.address}}",
-		      	  		"#adult{{@index}}Country": "VNM",
-		      	  		"#adult{{@index}}ProState": "{{this.province}}",
-		      	  		"#adult{{@index}}MobilePhone": "{{this.mobilePhone}}",
-		      	  		"#adult{{@index}}Email": "{{this.email}}",
-		      	  		{{/each}}
-		      	  		{{#each children}}
-		      	  		"#child{{@index}}Title": "{{this.title}}",
-		      	  		"#child{{@index}}Lastname": "{{this.lastName}}",
-		      	  		"#child{{@index}}Firstname": "{{this.firstName}}",
-						"#child{{@index}}MobilePhone": "{{this.mobilePhone}}",
-		      	  		{{/each}}
-		      	  		"#cardNumber": "{{cardNumber}}",
-		      	  		"#expiryMonth": "{{expiryMonth}}",
-		      	  		"#expiryYear": "{{expiryYear}}",
-		      	  		"#cardCVC": "{{cardCVC}}",
-		      	  		"#cardName": "{{cardName}}",
-		      	  		"#address": "{{cardAddress}}",
-		      	  		"#email": "{{cardEmail}}",
-		      	  		"#phone": "{{cardPhone}}",
-		      	  		"#country": "VNM"
-		      	  	};
+	      	  	var passenger = {
+	      	  		{{#each adults}}
+	      	  		"#txtPax{{this.index}}_Gender": "{{this.gender}}",
+	      	  		"#txtPax{{this.index}}_LName": "{{this.lastName}}",
+	      	  		"#txtPax{{this.index}}_FName": "{{this.firstName}}",
+	      	  		"#txtPax{{this.index}}_Addr1": "{{this.address}}",
+	      	  		"#txtPax{{this.index}}_City": "{{this.province}}",
+	      	  		"#txtPax{{this.index}}_Ctry": "234",
+	      	  		"#txtPax{{this.index}}_Phone2": "{{this.mobilePhone}}",
+	      	  		"#txtPax{{this.index}}_Phone1": "{{this.mobilePhone}}",
+	      	  		"#txtPax{{this.index}}_EMail": "{{this.email}}",
+	      	  		{{/each}}
+	      	  		{{#each children}}
+	      	  		"#txtPax{{this.index}}_Gender": "C",
+	      	  		"#txtPax{{this.index}}_LName": "{{this.lastName}}",
+	      	  		"#txtPax{{this.index}}_FName": "{{this.firstName}}",
+	      	  		{{/each}}
+	      	  		"#txtCardNo": "{{cardNumber}}",
+	      	  		"#txtCVC": "{{cardCVC}}",
+	      	  		"#txtCardholder": "{{cardName}}",
+	      	  		"#txtAddr1": "{{cardAddress}}",
+	      	  		"#txtPhone": "{{cardPhone}}",
+	      	  		"#txtCity": "{{cardCity}}",
+	      	  		"#lstCtry": "234"
+	      	  	};
 
-		      	  	if ($('#adult0Title').length) {
-		      	  		for (var selector in passenger) {
-		      	  			$(selector).val(passenger[selector]);
-		      	  		}
+	      	  	if ($('#txtPax1_Gender').length) {
+	      	  		for (var selector in passenger) {
+	      	  			$(selector).val(passenger[selector]);
+	      	  		}
 
-		      	  		$('[type="submit"]').trigger('click');
-		      	  	}
-
-		      	  	if ($('#addOn_adult_0_flight_outbound_1').length) {
-		      	  		$('[type="submit"]').trigger('click');
-		      	  	}
-
-		      	  	if ($('#paymentInfo').length) {
-		      	  		if ($('#paymentInfo').is(':hidden')) {
-		      	  			$('[value="visaCard"]').next().trigger('click');
-		      	  		} else {
-		      	  			for (var selector in passenger) {
-		      	  				$(selector).val(passenger[selector]);
-		      	  			}		
-		      	  			
-		      	  			$('[type="checkbox"]').trigger('click');
-		      	  			$('[type="submit"]').trigger('click');
-		      	  		}
-		      	  	}
+	      	  		$('.button')[0].click();
 	      	  	}
+
+	      	  	if (document.getElementById('lstPaxItem:-1:1:12')) {
+	      	  		var adults = {{{json adults}}},
+	      	  			children = {{{json children}}},
+	      	  			direction = {{direction}},
+	      	  			passengerIndex = 1;
+	      	  			bagIndex = 12;
+
+					adults.forEach(function (adult) {
+						var bag1El = document.getElementById('lstPaxItem:-'+ passengerIndex +':1:' + bagIndex),
+							bag2El;
+
+						bag1El.selectedIndex = adult.bag1;
+						$(bag1El).trigger('change');
+
+						if (direction == 2) {
+							bagIndex += 14;
+
+							bag2El = document.getElementById('lstPaxItem:-'+ passengerIndex +':2:' + bagIndex);
+
+							bag2El.selectedIndex = adult.bag2;
+							$(bag2El).trigger('change');
+						}
+
+						bagIndex += 14;
+						passengerIndex++;
+					});
+
+					if (Array.isArray(children)) {
+						children.forEach(function (child) {
+							var bag1El = document.getElementById('lstPaxItem:-'+ passengerIndex +':1:' + bagIndex),
+								bag2El;
+
+							bag1El.selectedIndex = child.bag1;
+							$(bag1El).trigger('change');
+
+							if (direction == 2) {
+								bagIndex += 14;
+
+								bag2El = document.getElementById('lstPaxItem:-'+ passengerIndex +':2:' + bagIndex);
+
+								bag2El.selectedIndex = child.bag2;
+								$(bag2El).trigger('change');
+							}
+
+							bagIndex += 14;
+							passengerIndex++;
+						});
+					}
+
+					$('.button')[0].click();
+	      	  	}
+
+	      	  	if ($('#paymentSection').length) {
+					$('img[src="images/merchvisa2.gif"]')[0].click();
+
+	      	  		var expiryDate = '{{expiryYear}}/{{expiryMonth}}';
+					
+	      	  		var index = $('#dlstExpiry').find('option[value^="'+ expiryDate +'"]').index();
+
+					$('#dlstExpiry')[0].selectedIndex = index;
+
+      	  			for (var selector in passenger) {
+      	  				$(selector).val(passenger[selector]);
+      	  			}
+      	  			
+      	  			$('.button')[0].click();
+	      	  	}
+				
+				if ($('#chkIAgree').length) {
+					$('#chkIAgree')[0].checked = true;
+
+					$('.button')[1].click();
+				}
 
 	      	  	return false;
 	      	  })();
 	      	*/});
+
+			Handlebars.registerHelper('json', function(context) {
+			    return JSON.stringify(context);
+			});
 
 			var infoTemplate = Handlebars.compile(str);
 			$scope.vietjet = {
@@ -121,13 +172,23 @@ angular
 	          };
 
 	          $scope.generate = function () {
-	          	if (!$scope.form.$invalid) {
-	          		localStorage.setItem('vietjet', JSON.stringify($scope.vietjet));
+	          	localStorage.setItem('vietjet', JSON.stringify($scope.vietjet));
 
-	          		$scope.generatedCode = infoTemplate($scope.vietjet);
+	          	var index = 1;
+
+	          	if (Array.isArray($scope.vietjet.adults)) {
+	          		$scope.vietjet.adults.forEach(function (adult) {
+	          			adult.index = index++;
+	          		});
 	          	}
 
+	          	if (Array.isArray($scope.vietjet.children)) {
+	          		$scope.vietjet.children.forEach(function (child) {
+	          			child.index = index++;
+	          		});
+	          	}
 
+	          	$scope.generatedCode = infoTemplate($scope.vietjet);
 	          };
 	      }
 	    })
