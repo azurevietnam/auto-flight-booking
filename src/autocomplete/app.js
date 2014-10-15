@@ -194,7 +194,49 @@ angular
 	    })
 	    .state('jetstar', {
 	      url: "/jetstar",
-	      templateUrl: "partials/jetstar.html"
+	      templateUrl: "partials/jetstar.html",
+	      controller: function ($scope) {
+	      	$scope.jetstar = {
+	      		adults: [{}],
+	      		children: []
+	      	};
+
+	      	$scope.addAdult = function () {
+	      		$scope.jetstar.adults.push({});
+	      	};
+
+	      	$scope.removeAdult = function (index) {
+	      		$scope.jetstar.adults.splice(index, 1);
+	      	};
+
+	      	$scope.addChild = function () {
+	      		$scope.jetstar.children.push({});
+	      	};
+
+	      	$scope.removeChild = function (index) {
+	      		$scope.jetstar.children.splice(index, 1);
+	      	};
+
+	      	$scope.generate = function () {
+	      		localStorage.setItem('jetstar', JSON.stringify($scope.jetstar));
+
+	      		var index = 1;
+
+	      		if (Array.isArray($scope.jetstar.adults)) {
+	      			$scope.jetstar.adults.forEach(function (adult) {
+	      				adult.index = index++;
+	      			});
+	      		}
+
+	      		if (Array.isArray($scope.jetstar.children)) {
+	      			$scope.jetstar.children.forEach(function (child) {
+	      				child.index = index++;
+	      			});
+	      		}
+
+	      		$scope.generatedCode = infoTemplate($scope.jetstar);
+	      	};
+	      }
 	    });
 	})
 	.controller('Ctrl', function ($scope) {
