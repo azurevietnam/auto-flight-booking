@@ -56,52 +56,50 @@ angular
 	      	  		$('.button')[0].click();
 	      	  	}
 
-	      	  	if (document.getElementById('lstPaxItem:-1:1:12')) {
-	      	  		var adults = {{{json adults}}},
+	      	  	if ($('.lstShopSelect').length) {
+	      	  		var $bagSelect = $('.lstShopSelect'),
+	      	  			adults = {{{json adults}}},
 	      	  			children = {{{json children}}},
-	      	  			direction = {{direction}},
-	      	  			passengerIndex = 1;
-	      	  			bagIndex = 12;
+	      	  			direction = ($bagSelect.length == adults.length + children.length) ? 1 : 2,
+	      	  			bagIndex = 0;
 
 					adults.forEach(function (adult) {
-						var bag1El = document.getElementById('lstPaxItem:-'+ passengerIndex +':1:' + bagIndex),
+						var bag1El = $bagSelect[bagIndex],
 							bag2El;
 
 						bag1El.selectedIndex = adult.bag1;
 						$(bag1El).trigger('change');
 
 						if (direction == 2) {
-							bagIndex += 14;
+							bagIndex++;
 
-							bag2El = document.getElementById('lstPaxItem:-'+ passengerIndex +':2:' + bagIndex);
+							bag2El = $bagSelect[bagIndex];
 
 							bag2El.selectedIndex = adult.bag2;
 							$(bag2El).trigger('change');
 						}
 
-						bagIndex += 14;
-						passengerIndex++;
+						bagIndex++;
 					});
 
 					if (Array.isArray(children)) {
 						children.forEach(function (child) {
-							var bag1El = document.getElementById('lstPaxItem:-'+ passengerIndex +':1:' + bagIndex),
+							var bag1El = $bagSelect[bagIndex],
 								bag2El;
 
 							bag1El.selectedIndex = child.bag1;
 							$(bag1El).trigger('change');
 
 							if (direction == 2) {
-								bagIndex += 14;
+								bagIndex++;
 
-								bag2El = document.getElementById('lstPaxItem:-'+ passengerIndex +':2:' + bagIndex);
+								bag2El = $bagSelect[bagIndex];
 
 								bag2El.selectedIndex = child.bag2;
 								$(bag2El).trigger('change');
 							}
 
-							bagIndex += 14;
-							passengerIndex++;
+							bagIndex++;
 						});
 					}
 
