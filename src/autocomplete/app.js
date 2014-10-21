@@ -4,6 +4,10 @@ function hereDoc(f) {
       replace(/\*\/[^\/]+$/, '');
 }
 
+Handlebars.registerHelper('json', function(context) {
+    return JSON.stringify(context);
+});
+
 angular
 	.module('app', ['ui.router', 'ui.bootstrap'])
 	.config(function($compileProvider, $stateProvider, $urlRouterProvider) {
@@ -134,10 +138,6 @@ angular
 	      	  })();
 	      	*/});
 
-			Handlebars.registerHelper('json', function(context) {
-			    return JSON.stringify(context);
-			});
-
 			var infoTemplate = Handlebars.compile(str);
 			$scope.vietjet = {
 				adults: [{}],
@@ -196,10 +196,62 @@ angular
 	      url: "/jetstar",
 	      templateUrl: "partials/jetstar.html",
 	      controller: function ($scope) {
-	      	$scope.jetstar = {
-	      		adults: [{}],
-	      		children: []
-	      	};
+	      	var str = hereDoc(function() {/*!
+	      	  javascript:(function () {
+	      	  	var passenger = {
+	      	  		{{#each adults}}
+	      	  		"#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListTitle_{{this.index}}": "{{this.gender}}",
+	      	  		"#ControlGroupPassengerView_PassengerInputViewPassengerView_TextBoxLastName_{{this.index}}": "{{this.lastName}}",
+	      	  		"#ControlGroupPassengerView_PassengerInputViewPassengerView_TextBoxFirstName_{{this.index}}": "{{this.firstName}}",
+	      	  		"#txtPax{{this.index}}_Addr1": "{{this.address}}",
+	      	  		"#txtPax{{this.index}}_City": "{{this.province}}",
+	      	  		"#txtPax{{this.index}}_Ctry": "234",
+	      	  		"#txtPax{{this.index}}_Phone2": "{{this.mobilePhone}}",
+	      	  		"#txtPax{{this.index}}_Phone1": "{{this.mobilePhone}}",
+	      	  		"#txtPax{{this.index}}_EMail": "{{this.email}}",
+	      	  		{{/each}}
+	      	  		{{#each children}}
+	      	  		"#txtPax{{this.index}}_Gender": "C",
+	      	  		"#txtPax{{this.index}}_LName": "{{this.lastName}}",
+	      	  		"#txtPax{{this.index}}_FName": "{{this.firstName}}",
+	      	  		{{/each}}
+	      	  		"#txtCardNo": "{{cardNumber}}",
+	      	  		"#txtCVC": "{{cardCVC}}",
+	      	  		"#txtCardholder": "{{cardName}}",
+	      	  		"#txtAddr1": "{{cardAddress}}",
+	      	  		"#txtPhone": "{{cardPhone}}",
+	      	  		"#txtCity": "{{cardCity}}",
+	      	  		"#lstCtry": "234"
+	      	  	};
+
+	      	  	if ($('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListTitle_1').length) {
+	      	  		for (var selector in passenger) {
+	      	  			$(selector).val(passenger[selector]);
+	      	  		}
+
+	      	  		$('.button')[0].click();
+	      	  	}
+
+	      	  	return false;
+	      	  })();
+	      	*/});
+
+			var infoTemplate = Handlebars.compile(str);
+
+			$scope.jetstar = {
+				adults: [{}],
+				children: []
+			};
+
+			try {
+				var jetstar = localStorage.getItem('jetstar') ? JSON.parse(localStorage.getItem('jetstar')) : {};
+			} catch (e) {
+				var jetstar = {};
+			}
+			
+			if (jetstar['adults']) {
+				$scope.jetstar = angular.extend($scope.jetstar, jetstar);
+			}
 
 	      	$scope.addAdult = function () {
 	      		$scope.jetstar.adults.push({});
@@ -218,7 +270,11 @@ angular
 	      	};
 
 	      	$scope.generate = function () {
-	      		localStorage.setItem('jetstar', JSON.stringify($scope.jetstar));
+	      		var jetstar = {};
+
+	      		angular.copy($scope.jetstar, jetstar);
+
+	      		localStorage.setItem('jetstar', JSON.stringify(jetstar));
 
 	      		var index = 1;
 
