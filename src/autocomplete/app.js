@@ -210,26 +210,53 @@ angular
 	      	  		"#txtPax{{this.index}}_Phone1": "{{this.mobilePhone}}",
 	      	  		"#txtPax{{this.index}}_EMail": "{{this.email}}",
 	      	  		{{/each}}
-	      	  		{{#each children}}
-	      	  		"#txtPax{{this.index}}_Gender": "C",
-	      	  		"#txtPax{{this.index}}_LName": "{{this.lastName}}",
-	      	  		"#txtPax{{this.index}}_FName": "{{this.firstName}}",
-	      	  		{{/each}}
-	      	  		"#txtCardNo": "{{cardNumber}}",
-	      	  		"#txtCVC": "{{cardCVC}}",
-	      	  		"#txtCardholder": "{{cardName}}",
-	      	  		"#txtAddr1": "{{cardAddress}}",
-	      	  		"#txtPhone": "{{cardPhone}}",
-	      	  		"#txtCity": "{{cardCity}}",
-	      	  		"#lstCtry": "234"
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_DropDownListTitle": "{{contact.gender}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxFirstName": "{{contact.firstName}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxLastName": "{{contact.lastName}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxEmailAddress": "{{contact.email}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxEmailAddressConfirm": "{{contact.email}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxOtherPhone": "{{contact.phone}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxAddressLine1": "{{contact.street}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxCity": "{{contact.city}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_DropDownListStateProvince": "{{contact.province}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxPostalCode": "{{contact.zipcode}}"
 	      	  	};
 
 	      	  	if ($('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListTitle_1').length) {
+					$('.manage-baggage-trigger')[0].click();
+
 	      	  		for (var selector in passenger) {
-	      	  			$(selector).val(passenger[selector]);
+	      	  			$(selector).val(passenger[selector]).trigger('change');
 	      	  		}
 
-	      	  		$('.button')[0].click();
+	      	  		var adults = {{{json adults}}},
+	      	  			direction = {{direction}};
+
+	      	  		adults.forEach(function (adult, index) {
+						$('#ControlGroupPassengerView_PassengerInputViewPassengerView_AdditionalBaggagePassengerView_AdditionalBaggageDropDownListJourney0Pax' + index).val(adult.bag1).trigger('change');
+
+						if (direction == 2) {
+							$('#ControlGroupPassengerView_PassengerInputViewPassengerView_AdditionalBaggagePassengerView_AdditionalBaggageDropDownListJourney1Pax' + index).val(adult.bag2).trigger('change');
+						}
+	      	  		});
+	      	  	}
+
+	      	  	if ($('[name="card_number1"]').length) {
+					var cardNumber = '{{cardNumber}}';
+
+					[0, 1, 2, 3].forEach(function (index) {
+						$('[name="card_number'+ (index + 1) +'"]').val(cardNumber.substring(index * 4, (index + 1) * 4))
+							.trigger('change')
+							.trigger('keydown')
+							.trigger('keyup')
+							.trigger('paste')
+							.trigger('blur');
+					});
+
+					$('#ControlGroupPayView_PaymentSectionPayView_UpdatePanelPayView_PaymentInputPayView_TextBoxCC__AccountHolderName').val('{{cardName}}').trigger('focusin');
+					$('#ControlGroupPayView_PaymentSectionPayView_UpdatePanelPayView_PaymentInputPayView_DropDownListEXPDAT_Month').val('{{expiryMonth}}').trigger('focusin').trigger('change');
+					$('#ControlGroupPayView_PaymentSectionPayView_UpdatePanelPayView_PaymentInputPayView_DropDownListEXPDAT_Year').val('{{expiryYear}}').trigger('focusin').trigger('change');
+					$('#ControlGroupPayView_PaymentSectionPayView_UpdatePanelPayView_PaymentInputPayView_TextBoxCC__VerificationCode').trigger('focusin').val('{{cardCVC}}').trigger('keydown');
 	      	  	}
 
 	      	  	return false;
