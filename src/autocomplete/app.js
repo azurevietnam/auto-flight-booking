@@ -239,6 +239,8 @@ angular
 							$('#ControlGroupPassengerView_PassengerInputViewPassengerView_AdditionalBaggagePassengerView_AdditionalBaggageDropDownListJourney1Pax' + index).val(adult.bag2).trigger('change');
 						}
 	      	  		});
+
+	      	  		$('#ControlGroupPassengerView_ButtonSubmit').trigger('click');
 	      	  	}
 
 	      	  	if ($('[name="card_number1"]').length) {
@@ -249,7 +251,6 @@ angular
 							.trigger('change')
 							.trigger('keydown')
 							.trigger('keyup')
-							.trigger('paste')
 							.trigger('blur');
 					});
 
@@ -257,6 +258,10 @@ angular
 					$('#ControlGroupPayView_PaymentSectionPayView_UpdatePanelPayView_PaymentInputPayView_DropDownListEXPDAT_Month').val('{{expiryMonth}}').trigger('focusin').trigger('change');
 					$('#ControlGroupPayView_PaymentSectionPayView_UpdatePanelPayView_PaymentInputPayView_DropDownListEXPDAT_Year').val('{{expiryYear}}').trigger('focusin').trigger('change');
 					$('#ControlGroupPayView_PaymentSectionPayView_UpdatePanelPayView_PaymentInputPayView_TextBoxCC__VerificationCode').trigger('focusin').val('{{cardCVC}}').trigger('keydown');
+
+					$('#ControlGroupPayView_AgreementInputPayView_CheckBoxAgreement').prop('checked', true).trigger('change');
+
+					$('#ControlGroupPayView_ButtonSubmit')[0].click();
 	      	  	}
 
 	      	  	return false;
