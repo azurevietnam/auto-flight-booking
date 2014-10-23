@@ -4,6 +4,10 @@ function hereDoc(f) {
       replace(/\*\/[^\/]+$/, '');
 }
 
+Handlebars.registerHelper('json', function(context) {
+    return JSON.stringify(context);
+});
+
 angular
 	.module('app', ['ui.router', 'ui.bootstrap'])
 	.config(function($compileProvider, $stateProvider, $urlRouterProvider) {
@@ -132,10 +136,6 @@ angular
 	      	  })();
 	      	*/});
 
-			Handlebars.registerHelper('json', function(context) {
-			    return JSON.stringify(context);
-			});
-
 			var infoTemplate = Handlebars.compile(str);
 			$scope.vietjet = {
 				adults: [{}],
@@ -192,7 +192,137 @@ angular
 	    })
 	    .state('jetstar', {
 	      url: "/jetstar",
-	      templateUrl: "partials/jetstar.html"
+	      templateUrl: "partials/jetstar.html",
+	      controller: function ($scope) {
+	      	var str = hereDoc(function() {/*!
+	      	  javascript:(function () {
+	      	  	var passenger = {
+	      	  		{{#each adults}}
+	      	  		"#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListTitle_{{this.index}}": "{{this.gender}}",
+	      	  		"#ControlGroupPassengerView_PassengerInputViewPassengerView_TextBoxLastName_{{this.index}}": "{{this.lastName}}",
+	      	  		"#ControlGroupPassengerView_PassengerInputViewPassengerView_TextBoxFirstName_{{this.index}}": "{{this.firstName}}",
+	      	  		"#txtPax{{this.index}}_Addr1": "{{this.address}}",
+	      	  		"#txtPax{{this.index}}_City": "{{this.province}}",
+	      	  		"#txtPax{{this.index}}_Ctry": "234",
+	      	  		"#txtPax{{this.index}}_Phone2": "{{this.mobilePhone}}",
+	      	  		"#txtPax{{this.index}}_Phone1": "{{this.mobilePhone}}",
+	      	  		"#txtPax{{this.index}}_EMail": "{{this.email}}",
+	      	  		{{/each}}
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_DropDownListTitle": "{{contact.gender}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxFirstName": "{{contact.firstName}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxLastName": "{{contact.lastName}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxEmailAddress": "{{contact.email}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxEmailAddressConfirm": "{{contact.email}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxOtherPhone": "{{contact.phone}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxAddressLine1": "{{contact.street}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxCity": "{{contact.city}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_DropDownListStateProvince": "{{contact.province}}",
+	      	  		"#ControlGroupPassengerView_ContactInputViewPassengerView_TextBoxPostalCode": "{{contact.zipcode}}"
+	      	  	};
+
+	      	  	if ($('#ControlGroupPassengerView_PassengerInputViewPassengerView_DropDownListTitle_1').length) {
+					$('.manage-baggage-trigger')[0].click();
+
+	      	  		for (var selector in passenger) {
+	      	  			$(selector).val(passenger[selector]).trigger('change');
+	      	  		}
+
+	      	  		var adults = {{{json adults}}},
+	      	  			direction = {{direction}};
+
+	      	  		adults.forEach(function (adult, index) {
+						$('#ControlGroupPassengerView_PassengerInputViewPassengerView_AdditionalBaggagePassengerView_AdditionalBaggageDropDownListJourney0Pax' + index).val(adult.bag1).trigger('change');
+
+						if (direction == 2) {
+							$('#ControlGroupPassengerView_PassengerInputViewPassengerView_AdditionalBaggagePassengerView_AdditionalBaggageDropDownListJourney1Pax' + index).val(adult.bag2).trigger('change');
+						}
+	      	  		});
+
+	      	  		$('#ControlGroupPassengerView_ButtonSubmit').trigger('click');
+	      	  	}
+
+	      	  	if ($('[name="card_number1"]').length) {
+					var cardNumber = '{{cardNumber}}';
+
+					[0, 1, 2, 3].forEach(function (index) {
+						$('[name="card_number'+ (index + 1) +'"]').val(cardNumber.substring(index * 4, (index + 1) * 4))
+							.trigger('change')
+							.trigger('keydown')
+							.trigger('keyup')
+							.trigger('blur');
+					});
+
+					$('#ControlGroupPayView_PaymentSectionPayView_UpdatePanelPayView_PaymentInputPayView_TextBoxCC__AccountHolderName').val('{{cardName}}').trigger('focusin');
+					$('#ControlGroupPayView_PaymentSectionPayView_UpdatePanelPayView_PaymentInputPayView_DropDownListEXPDAT_Month').val('{{expiryMonth}}').trigger('focusin').trigger('change');
+					$('#ControlGroupPayView_PaymentSectionPayView_UpdatePanelPayView_PaymentInputPayView_DropDownListEXPDAT_Year').val('{{expiryYear}}').trigger('focusin').trigger('change');
+					$('#ControlGroupPayView_PaymentSectionPayView_UpdatePanelPayView_PaymentInputPayView_TextBoxCC__VerificationCode').trigger('focusin').val('{{cardCVC}}').trigger('keydown');
+
+					$('#ControlGroupPayView_AgreementInputPayView_CheckBoxAgreement').prop('checked', true).trigger('change');
+
+					$('#ControlGroupPayView_ButtonSubmit')[0].click();
+	      	  	}
+
+	      	  	return false;
+	      	  })();
+	      	*/});
+
+			var infoTemplate = Handlebars.compile(str);
+
+			$scope.jetstar = {
+				adults: [{}],
+				children: []
+			};
+
+			try {
+				var jetstar = localStorage.getItem('jetstar') ? JSON.parse(localStorage.getItem('jetstar')) : {};
+			} catch (e) {
+				var jetstar = {};
+			}
+			
+			if (jetstar['adults']) {
+				$scope.jetstar = angular.extend($scope.jetstar, jetstar);
+			}
+
+	      	$scope.addAdult = function () {
+	      		$scope.jetstar.adults.push({});
+	      	};
+
+	      	$scope.removeAdult = function (index) {
+	      		$scope.jetstar.adults.splice(index, 1);
+	      	};
+
+	      	$scope.addChild = function () {
+	      		$scope.jetstar.children.push({});
+	      	};
+
+	      	$scope.removeChild = function (index) {
+	      		$scope.jetstar.children.splice(index, 1);
+	      	};
+
+	      	$scope.generate = function () {
+	      		var jetstar = {};
+
+	      		angular.copy($scope.jetstar, jetstar);
+
+	      		localStorage.setItem('jetstar', JSON.stringify(jetstar));
+
+	      		var index = 1;
+
+	      		if (Array.isArray($scope.jetstar.adults)) {
+	      			$scope.jetstar.adults.forEach(function (adult) {
+	      				adult.index = index++;
+	      			});
+	      		}
+
+	      		if (Array.isArray($scope.jetstar.children)) {
+	      			$scope.jetstar.children.forEach(function (child) {
+	      				child.index = index++;
+	      			});
+	      		}
+
+	      		$scope.generatedCode = infoTemplate($scope.jetstar);
+	      	};
+	      }
 	    });
 	})
 	.controller('Ctrl', function ($scope) {

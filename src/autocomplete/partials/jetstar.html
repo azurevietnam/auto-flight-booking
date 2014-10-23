@@ -1,2 +1,260 @@
-Phần thông tin tự động của JetStar đang được làm.
-Chi tiết liên hệ: luanvuvt@gmail.com.
+<form name="form" class="form-horizontal" role="form">
+  <fieldset>
+    <legend>Thông tin chuyến bay</legend>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Chuyến bay</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="jetstar.direction">
+            <option value="2">Khứ hồi</option>
+            <option value="1">Một chiều</option>
+          </select>
+        </div>
+      </div>
+  </fieldset>
+  <fieldset ng-repeat="adult in jetstar.adults">
+      <legend>Người lớn {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeAdult($index)">Xóa</button></legend>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Quý danh</label>
+        <div class="col-sm-10">
+          <select class="form-control" name="gender" ng-model="adult.gender" required>
+      			<option value="MR">Ông</option>
+      			<option value="MRS">Bà</option>
+      			<option value="MISS">Bé gái</option>
+      			<option value="MS">Cô</option>
+      			<option value="MSTR">Bé trai</option>
+      			<option value="CAPT">Captain</option>
+      			<option value="DR">Bác sĩ</option>
+      			<option value="PROF">Professor</option>
+      			<option value="REV">Reverend</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+          <label class="col-sm-2 control-label">Tên</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="firstName" ng-model="adult.firstName" placeholder="Thu">
+          </div>
+        </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Họ và tên đệm</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="lastName" ng-model="adult.lastName" placeholder="Nguyen Thi Bao">
+        </div> 
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Hành lí chiều đi</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="adult.bag1">
+            <option value="none">0kg Hành lý ký gửi</option>
+            <option value="BG15">thêm 15kg Hành lý ký gửi</option>
+            <option value="BG20">thêm 20kg Hành lý ký gửi</option>
+            <option value="BG25">thêm 25kg Hành lý ký gửi</option>
+            <option value="BG30">thêm 30kg Hành lý ký gửi</option>
+            <option value="BG35">thêm 35kg Hành lý ký gửi</option>
+            <option value="BG40">thêm 40kg Hành lý ký gửi</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" ng-if="jetstar.direction == 2">
+        <label class="col-sm-2 control-label">Hành lí chiều về</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="adult.bag2">
+            <option value="none">0kg Hành lý ký gửi</option>
+            <option value="BG15">thêm 15kg Hành lý ký gửi</option>
+            <option value="BG20">thêm 20kg Hành lý ký gửi</option>
+            <option value="BG25">thêm 25kg Hành lý ký gửi</option>
+            <option value="BG30">thêm 30kg Hành lý ký gửi</option>
+            <option value="BG35">thêm 35kg Hành lý ký gửi</option>
+            <option value="BG40">thêm 40kg Hành lý ký gửi</option>
+          </select>
+        </div>
+      </div>
+  </fieldset>
+  <fieldset ng-repeat="child in jetstar.children">
+    <legend>Trẻ em {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeChild($index)">Xóa</button></legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Họ và tên đệm</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="lastName" ng-model="child.lastName" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Tên</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="firstName" ng-model="child.firstName" required>
+      </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Hành lí chiều đi</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="child.bag1">
+            <option value="none">0kg Hành lý ký gửi</option>
+            <option value="BG15">thêm 15kg Hành lý ký gửi</option>
+            <option value="BG20">thêm 20kg Hành lý ký gửi</option>
+            <option value="BG25">thêm 25kg Hành lý ký gửi</option>
+            <option value="BG30">thêm 30kg Hành lý ký gửi</option>
+            <option value="BG35">thêm 35kg Hành lý ký gửi</option>
+            <option value="BG40">thêm 40kg Hành lý ký gửi</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" ng-if="jetstar.direction == 2">
+        <label class="col-sm-2 control-label">Hành lí chiều về</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="child.bag2">
+            <option value="none">0kg Hành lý ký gửi</option>
+            <option value="BG15">thêm 15kg Hành lý ký gửi</option>
+            <option value="BG20">thêm 20kg Hành lý ký gửi</option>
+            <option value="BG25">thêm 25kg Hành lý ký gửi</option>
+            <option value="BG30">thêm 30kg Hành lý ký gửi</option>
+            <option value="BG35">thêm 35kg Hành lý ký gửi</option>
+            <option value="BG40">thêm 40kg Hành lý ký gửi</option>
+          </select>
+        </div>
+      </div>
+  </fieldset>  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="button" class="btn btn-success" ng-click="addAdult()">Thêm người lớn</button>
+      <button type="button" class="btn btn-success" ng-click="addAdult()">Thêm trẻ em</button>
+    </div>
+  </div>
+
+  <fieldset>
+    <legend>Thông tin liên hệ</legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Quý danh</label>
+      <div class="col-sm-10">
+        <select class="form-control" name="gender" ng-model="jetstar.contact.gender" required>
+          <option value="MR">Ông</option>
+          <option value="MRS">Bà</option>
+          <option value="MISS">Bé gái</option>
+          <option value="MS">Cô</option>
+          <option value="MSTR">Bé trai</option>
+          <option value="CAPT">Captain</option>
+          <option value="DR">Bác sĩ</option>
+          <option value="PROF">Professor</option>
+          <option value="REV">Reverend</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Tên</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="jetstar.contact.firstName" placeholder="Thu">
+        </div>
+      </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Họ và tên đệm</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="jetstar.contact.lastName" placeholder="Nguyen Thi Bao">
+      </div> 
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="jetstar.contact.email">
+      </div> 
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Di động</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="jetstar.contact.phone">
+      </div> 
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Thông tin địa chỉ</legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Phố/Đường</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="jetstar.contact.street">
+      </div> 
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Thành phố/Thị trấn</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="jetstar.contact.city">
+      </div> 
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Tỉnh</label>
+      <div class="col-sm-10">
+        <select class="form-control" ng-model="jetstar.contact.province">
+          <option value="">Lựa chọn</option>
+          <option value="VN|BMV">Buôn Mê Thuột</option>
+          <option value="VN|NHA">Cam Ranh</option>
+          <option value="VN|VCA">Cần Thơ</option>
+          <option value="VN|HAN">Hà Nội</option>
+          <option value="VN|HPH">Hải Phòng</option>
+          <option value="VN|HUI">Huế</option>
+          <option value="VN|VKG">Kien Giang</option>
+          <option value="VN|NHT">Nha Trang</option>
+          <option value="VN|THD">Thanh Hoa</option>
+          <option value="VN|SGN">Thành phố Hồ Chí Minh</option>
+          <option value="VN|VII">Thành phố Vinh</option>
+          <option value="VN|DLI">Đà Lạt</option>
+          <option value="VN|DAD">Đà Nẵng</option>
+        </select>
+      </div> 
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Mã bưu điện</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="jetstar.contact.zipcode">
+      </div> 
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Chọn chỗ ngồi</legend>
+    <span class="help-block">Lưu ý: Tại bước đặt ghế ngồi, bạn phải tự chọn ghế.</span>
+  </fieldset>
+  <fieldset>
+    <legend>Thanh toán</legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" ng-model="jetstar.child.title">Phương thức</label>
+      <div class="col-sm-10">
+          <select class="form-control">
+            <option value="visa">VISA</option>
+          </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Mã thẻ</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="jetstar.cardNumber" />
+      </div>
+    </div>   
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Tháng hết hạn</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="jetstar.expiryMonth" placeholder="07" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Năm hết hạn</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="jetstar.expiryYear" placeholder="2018" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">CVC</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="jetstar.cardCVC" placeholder="023" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Chủ thẻ</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="jetstar.cardName" placeholder="Nguyen Van A" />
+      </div>
+    </div>
+  </fieldset>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="generate();">Tạo đặt vé</button>
+      <a type="button" style="margin-top: 10px; cursor: move;" class="btn btn-lg btn-success btn-block" ng-if="generatedCode" ng-href="{{generatedCode}}">Kéo vào thanh bookmark</a>
+    </div>
+  </div>
+</form>
