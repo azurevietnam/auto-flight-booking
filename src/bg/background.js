@@ -16,6 +16,8 @@ function onUpdated() {
   chrome.tabs.create({
   	url: '/changelogs.html'
   });
+
+  localStorage.setItem('latestVersion', currentVersion);
 }
 
 
