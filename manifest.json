@@ -1,10 +1,10 @@
 {
-	"name":"Ứng dụng đặt vé máy bay",
-	"version":"1.0.0",
+	"name":"Auto Flight Booking",
+	"version":"2.0.0",
 	"manifest_version" : 2,
 
 	"description":"Ứng dụng trợ giúp mua vé máy bay VietJetAir, JetStar",
-	"homepage_url" : "http://cunghocweb.com",
+	"homepage_url" : "https://chrome.google.com/webstore/detail/auto-flight-booking/napjhloekijbjlidhihkkfjgdjdmlagp",
 	"icons":{
 		"16":"icons/icon16.png",
 		"48":"icons/icon48.png",
