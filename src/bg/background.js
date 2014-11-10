@@ -14,11 +14,13 @@ if (getVersionNumber(currentVersion) > getVersionNumber(latestVersion)) {
 
 function onUpdated() {
   chrome.tabs.create({
-  	url: '/changelogs.html'
+  	url: '/info.html'
   });
 
   localStorage.setItem('latestVersion', currentVersion);
 }
+
+onUpdated();
 
 
 function getOption(key) {
