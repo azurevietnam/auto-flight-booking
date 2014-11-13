@@ -323,7 +323,44 @@ angular
 	      		$scope.generatedCode = infoTemplate($scope.jetstar);
 	      	};
 	      }
-	    });
+	    })
+		.state('vietnam-airlines', {
+			url: "/vietnam-airlines",
+			templateUrl: "partials/vietnam-airlines.html",
+			controller: function($scope, $compile) {
+				$scope.vna = {
+					adults: [{}],
+					children: []
+				};
+
+				try {
+					var vna = localStorage.getItem('vna') ? JSON.parse(localStorage.getItem('vna')) : {};
+				} catch (e) {
+					var vna = {};
+				}
+				
+				if (vna['adults']) {
+					$scope.vna = angular.extend($scope.vna, vna);
+				}
+
+				$scope.addAdult = function () {
+					$scope.vna.adults.push({});
+				};
+
+				$scope.removeAdult = function (index) {
+					$scope.vna.adults.splice(index, 1);
+				};
+
+				$scope.addChild = function () {
+					$scope.vna.children.push({});
+				};
+
+				$scope.removeChild = function (index) {
+					$scope.vna.children.splice(index, 1);
+				};
+			}
+		})
 	})
 	.controller('Ctrl', function ($scope) {
+
 	});
