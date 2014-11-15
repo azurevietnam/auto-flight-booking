@@ -413,19 +413,89 @@ angular
 		      	  	if ($('#payment').length) {
 						var paymentType = '{{payment_type}}';
 
+						var canSubmit = false;
+
 						if (paymentType == 'creditCardTypes-0-ba-1' || paymentType == 'creditCardTypes-0-ik-0') {
-							$('#creditCardSelect-0').val(paymentType).trigger('change');
+							$('[value="creditCardTypes"]').trigger('click');
+							$('#payc_1').addClass('loading');
+							
+							var t1 = setInterval(function () {
+								if (!$('#payc_1').hasClass('loading') || $('#cardNumberPart_0').length) {
+									clearInterval(t1);
+									$('#payc_1').removeClass('loading');
+
+									$('#creditCardSelect-0').val(paymentType);
+									
+									YUI().use('node-event-simulate', function(Y) {
+										Y.one('#creditCardSelect-0').simulate("change");
+									});
+
+									$('#card-details-0').addClass('loading');
+									
+									var t2 = setInterval(function () {
+										if (!$('#card-details-0').hasClass('loading') || $('#cardNumberPart_0').length) {
+											clearInterval(t2);
+											$('#card-details-0').removeClass('loading');
+
+											if (paymentType == 'creditCardTypes-0-ba-1') {
+												var cardNumber = '{{visa_card_number}}';
+
+												[0, 1, 2, 3].forEach(function (index) {
+													$('#cardNumberPart_' + index).val(cardNumber.substring(index * 4, (index + 1) * 4))
+												});
+												$('[name="selectedCards[0].cardNumber"]').val('{{visa_card_number}}');
+												$('[name="selectedCards[0].expDate.month"]').val('{{visa_expdate_month}}');
+												$('[name="selectedCards[0].expDate.year"]').val('{{visa_expdate_year}}');
+												$('[name="selectedCards[0].cvcNumber"]').val('{{visa_cvc_number}}');
+												$('[name="selectedCards[0].nameOnCard"]').val('{{visa_name_on_card}}');
+											} else if (paymentType == 'creditCardTypes-0-ik-0') {
+												var cardNumber = '{{master_card_card_number}}';
+
+												[0, 1, 2, 3].forEach(function (index) {
+													$('#cardNumberPart_' + index).val(cardNumber.substring(index * 4, (index + 1) * 4))
+												});
+												$('[name="selectedCards[0].cardNumber"]').val('{{master_card_card_number}}');
+												$('[name="selectedCards[0].expDate.month"]').val('{{master_card_expdate_month}}');
+												$('[name="selectedCards[0].expDate.year"]').val('{{master_card_expdate_year}}');
+												$('[name="selectedCards[0].cvcNumber"]').val('{{master_card_cvc_number}}');
+												$('[name="selectedCards[0].nameOnCard"]').val('{{master_card_name_on_card}}');												
+											}
+
+											canSubmit = true;
+										}											
+									}, 50);													
+								}
+							}, 50);
+
+
 						} else if (paymentType == 'pay_now') {
 							$('[value="pay_now"]').trigger('click');
+
+							canSubmit = true;
 						} else if (paymentType == 'pay_later') {
 							$('[value="pay_later"]').trigger('click');
+							$('#multi-fop-body-0').addClass('loading');
 
-							setInterval(function () {
-								$('[name="smlPayLaterBankName"]').val('{{pay_later_bank_name}}');
-							}, 100);
+							var t1 = setInterval(function () {
+								if ($('#multi-fop-body-0').hasClass('loading') || $('[name="smlPayLaterBankName"]').length) {
+									clearInterval(t1);
+									$('#multi-fop-body-0').removeClass('loading');
+
+									$('[name="smlPayLaterBankName"]').val('{{pay_later_bank_name}}');
+									canSubmit = true;
+								}
+							}, 50);
 						}
+						
+						var confirmTimer = setInterval(function () {
+							if (canSubmit) {
+								if (!$('#confirm').prop('checked')) {
+									$('#confirm').trigger('click');
+								}
 
-						$('#confirm').trigger('click');
+								clearInterval(confirmTimer);
+							}
+						}, 10);
 		      	  	}
 
 		      	  	return false;

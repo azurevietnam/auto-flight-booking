@@ -445,8 +445,8 @@
       <label class="col-sm-2 control-label">Phương thức</label>
       <div class="col-sm-10">
         <select class="form-control" ng-model="vna.payment_type">
-          <!-- <option value="creditCardTypes-0-ba-1">VISA</option> -->
-          <!-- <option value="creditCardTypes-0-ik-0">MasterCard</option> -->
+          <option value="creditCardTypes-0-ba-1">VISA</option>
+          <option value="creditCardTypes-0-ik-0">MasterCard</option>
           <option value="pay_now">Thanh toán nội địa tại Việt Nam - THANH TOÁN NGAY</option>
           <option value="pay_later">Thanh toán nội địa tại Việt Nam - THANH TOÁN SAU</option>
         </select>
@@ -457,13 +457,13 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Mã thẻ</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" ng-model="vna.visa.card_number" />
+          <input type="text" class="form-control" ng-model="vna.visa_card_number" />
         </div>
       </div>   
       <div class="form-group">
         <label class="col-sm-2 control-label">Tháng hết hạn</label>
         <div class="col-sm-10">
-          <select class="form-control" ng-model="vna.visa.expdate_month">
+          <select class="form-control" ng-model="vna.visa_expdate_month">
             <option value="01">Jan</option>
             <option value="02">Feb</option>
             <option value="03">Mar</option>
@@ -482,7 +482,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Năm hết hạn</label>
         <div class="col-sm-10">
-          <select class="form-control" ng-model="vna.visa.expdate_year">
+          <select class="form-control" ng-model="vna.visa_expdate_year">
             <option value="2014"> 2014 </option>
             <option value="2015"> 2015 </option>
             <option value="2016"> 2016 </option>
@@ -506,13 +506,13 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">CVC</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" ng-model="vna.visa.cvc_number" />
+          <input type="text" class="form-control" ng-model="vna.visa_cvc_number" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">Chủ thẻ</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" ng-model="vna.visa.name_on_card" />
+          <input type="text" class="form-control" ng-model="vna.visa_name_on_card" />
         </div>
       </div>
     </fieldset>
@@ -521,13 +521,13 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Mã thẻ</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" ng-model="vna.master_card.card_number" />
+          <input type="text" class="form-control" ng-model="vna.master_card_card_number" />
         </div>
       </div>   
       <div class="form-group">
         <label class="col-sm-2 control-label">Tháng hết hạn</label>
         <div class="col-sm-10">
-          <select class="form-control" ng-model="vna.master_card.expdate_month">
+          <select class="form-control" ng-model="vna.master_card_expdate_month">
             <option value="01">Jan</option>
             <option value="02">Feb</option>
             <option value="03">Mar</option>
@@ -546,7 +546,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Năm hết hạn</label>
         <div class="col-sm-10">
-          <select class="form-control" ng-model="vna.master_card.expdate_year">
+          <select class="form-control" ng-model="vna.master_card_expdate_year">
             <option value="2014"> 2014 </option>
             <option value="2015"> 2015 </option>
             <option value="2016"> 2016 </option>
@@ -570,13 +570,13 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">CVC</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" ng-model="vna.master_card.cvc_number" />
+          <input type="text" class="form-control" ng-model="vna.master_card_cvc_number" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">Chủ thẻ</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" ng-model="vna.master_card.name_on_card" />
+          <input type="text" class="form-control" ng-model="vna.master_card_name_on_card" />
         </div>
       </div>
     </fieldset>
