@@ -191,6 +191,15 @@
           </select>
         </div>
       </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Gender</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="adult.gender">
+            <option value="MALE">Male</option>
+            <option value="FEMALE">Female</option>
+          </select>
+        </div> 
+      </div>
   </fieldset>
   <fieldset ng-repeat="child in vna.children">
     <legend>Trẻ em {{$index + 1}} <button type="button" class="btn btn-danger btn-xs" ng-click="removeChild($index)">Xóa</button></legend>
@@ -383,25 +392,61 @@
         </select>
       </div>
     </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Gender</label>
+      <div class="col-sm-10">
+        <select class="form-control" ng-model="child.gender">
+          <option value="MALE">Male</option>
+          <option value="FEMALE">Female</option>
+        </select>
+      </div> 
+    </div>
   </fieldset>  
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="button" class="btn btn-success" ng-click="addAdult()">Thêm người lớn</button>
-      <button type="button" class="btn btn-success" ng-click="addChildren()">Thêm trẻ em</button>
+      <button type="button" class="btn btn-success" ng-click="addChild()">Thêm trẻ em</button>
     </div>
   </div>
 
   <fieldset>
-    <legend>Chọn chỗ ngồi</legend>
-    <span class="help-block">Lưu ý: Tại bước đặt ghế ngồi, bạn phải tự chọn ghế.</span>
+    <legend>Thông tin liên hệ</legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Phone</label>
+    </div>
+    <div class="form-group" ng-repeat="phone_number in vna.contact.phone_numbers">
+      <label class="col-sm-2 control-label">&nbsp;</label>
+      <div class="col-sm-2">
+        <select class="form-control" ng-model="phone_number.phone_type">
+          <option value="mobile">Mobile</option>
+          <option value="home">Home</option>
+          <option value="work">Business</option>
+          <option value="fax">Other</option>
+        </select>
+      </div>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="phone_number.area_code">
+      </div>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="phone_number.number">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Email Address</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="vna.contact.email1">
+      </div> 
+    </div>
   </fieldset>
-  <fieldset>
+
+  <fieldset ng-if="false">
     <legend>Thanh toán</legend>
     <div class="form-group">
-      <label class="col-sm-2 control-label" ng-model="vna.child.title">Phương thức</label>
+      <label class="col-sm-2 control-label">Phương thức</label>
       <div class="col-sm-10">
           <select class="form-control">
-            <option value="visa">VISA</option>
+            <option value="creditCardTypes-0-ba-1">VISA</option>
+            <option value="creditCardTypes-0-ik-0">MasterCard</option>
           </select>
       </div>
     </div>
