@@ -323,7 +323,184 @@ angular
 	      		$scope.generatedCode = infoTemplate($scope.jetstar);
 	      	};
 	      }
-	    });
+	    })
+		.state('vietnam-airlines', {
+			url: "/vietnam-airlines",
+			templateUrl: "partials/vietnam-airlines.html",
+			controller: function($scope, $compile) {
+		      	var str = hereDoc(function() {/*!
+		      	  javascript:(function () {
+		      	  	var passenger = {
+		      	  		{{#each adults}}
+		      	  		"#prefix-{{this.index}}": "{{this.prefix}}",
+		      	  		"#first_name-{{this.index}}": "{{this.first_name}}",
+		      	  		"#last_name-{{this.index}}": "{{this.last_name}}",
+		      	  		"#dob-{{this.index}}_0": "{{this.dob_day}}",
+		      	  		"#dob-{{this.index}}_1": "{{this.dob_month}}",
+		      	  		"#dob-{{this.index}}_2": "{{this.dob_year}}",
+		      	  		{{/each}}
+		      	  		{{#each children}}
+		      	  		"#prefix-{{this.index}}": "{{this.prefix}}",
+		      	  		"#first_name-{{this.index}}": "{{this.first_name}}",
+		      	  		"#last_name-{{this.index}}": "{{this.last_name}}",
+		      	  		"#dob-{{this.index}}_0": "{{this.dob_day}}",
+		      	  		"#dob-{{this.index}}_1": "{{this.dob_month}}",
+		      	  		"#dob-{{this.index}}_2": "{{this.dob_year}}",
+		      	  		{{/each}}
+		      	  		{{#each contact.phone_numbers}}
+						"#phoneType{{this.index}}": "{{this.phone_type}}",
+						"#phone{{@index}}-1-areaCode-raw": "{{this.area_code}}",
+						"#phone{{@index}}-1-number-raw": "{{this.number}}",
+						"#phone{{@index}}-1-areaCode": "{{this.area_code}}",
+						"#phone{{@index}}-1-number": "{{this.number}}",
+		      	  		{{/each}}
+		      	  		"#phone0-1-countryCode": "84",
+		      	  		"#phone1-1-countryCode": "84",
+		      	  		"#contactInfo-email-1": "{{this.contact.email1}}",
+		      	  		"#email_retype-1": "{{this.contact.email1}}",
+		      	  		"#txtCardNo": "{{cardNumber}}",
+		      	  		"#txtCVC": "{{cardCVC}}",
+		      	  		"#txtCardholder": "{{cardName}}",
+		      	  		"#txtAddr1": "{{cardAddress}}",
+		      	  		"#txtPhone": "{{cardPhone}}",
+		      	  		"#txtCity": "{{cardCity}}",
+		      	  		"#lstCtry": "234"
+		      	  	};
+
+		      	  	if ($('#prefix-0').length) {
+						$('.toggle-passenger').each(function () {
+							this.click();
+						});
+
+		      	  		for (var selector in passenger) {
+		      	  			$(selector).val(passenger[selector]);
+
+		      	  			if ($(selector).length) {
+								$(selector)[0].click();
+		      	  			}
+		      	  		}
+
+		      	  		var adults = {{{json adults}}},
+		      	  			children = {{{json children}}},
+		      	  			length = 0,
+							index = 0;
+
+						if (Array.isArray(adults)) {
+							for (var i = 0; i < adults.length; i++) {
+								if (adults[i].gender == 'MALE') {
+									$('#gender-'+ index +'-MALE').trigger('click');
+								} else {
+									$('#gender-'+ index +'-FEMALE').trigger('click');
+								}
+
+								index++;
+							}
+						}
+
+						if (Array.isArray(children)) {
+							for (var i = 0; i < children.length; i++) {
+								if (children[i].gender == 'MALE') {
+									$('#gender-'+ index +'-MALE').trigger('click');
+								} else {
+									$('#gender-'+ index +'-FEMALE').trigger('click');
+								}
+
+								index++;
+							}					
+						}
+		      	  	}
+
+		      	  	if ($('#payment').length) {
+						var paymentType = '{{payment_type}}';
+
+						if (paymentType == 'creditCardTypes-0-ba-1' || paymentType == 'creditCardTypes-0-ik-0') {
+							$('#creditCardSelect-0').val(paymentType).trigger('change');
+						} else if (paymentType == 'pay_now') {
+							$('[value="pay_now"]').trigger('click');
+						} else if (paymentType == 'pay_later') {
+							$('[value="pay_later"]').trigger('click');
+
+							setInterval(function () {
+								$('[name="smlPayLaterBankName"]').val('{{pay_later_bank_name}}');
+							}, 100);
+						}
+
+						$('#confirm').trigger('click');
+		      	  	}
+
+		      	  	return false;
+		      	  })();
+		      	*/});
+
+				var infoTemplate = Handlebars.compile(str);
+
+				$scope.vna = {
+					adults: [{}],
+					children: [],
+					contact: {
+						phone_numbers: [
+							{
+								phone_type: "home"
+							},
+							{
+								phone_type: "mobile"
+							}
+						]
+					}
+				};
+
+				try {
+					var vna = localStorage.getItem('vna') ? JSON.parse(localStorage.getItem('vna')) : {};
+				} catch (e) {
+					var vna = {};
+				}
+
+				if (vna['adults']) {
+					$scope.vna = angular.extend($scope.vna, vna);
+				}
+
+				$scope.addAdult = function () {
+					$scope.vna.adults.push({});
+				};
+
+				$scope.removeAdult = function (index) {
+					$scope.vna.adults.splice(index, 1);
+				};
+
+				$scope.addChild = function () {
+					$scope.vna.children.push({});
+				};
+
+				$scope.removeChild = function (index) {
+					$scope.vna.children.splice(index, 1);
+				};
+
+				$scope.generate = function () {
+					var vna = {};
+
+					angular.copy($scope.vna, vna);
+
+					localStorage.setItem('vna', JSON.stringify(vna));
+
+					var index = 0;
+
+					if (Array.isArray($scope.vna.adults)) {
+						$scope.vna.adults.forEach(function (adult) {
+							adult.index = index++;
+						});
+					}
+
+					if (Array.isArray($scope.vna.children)) {
+						$scope.vna.children.forEach(function (child) {
+							child.index = index++;
+						});
+					}
+
+					$scope.generatedCode = infoTemplate($scope.vna);
+				};
+			}
+		})
 	})
 	.controller('Ctrl', function ($scope) {
+
 	});
