@@ -439,47 +439,167 @@
     </div>
   </fieldset>
 
-  <fieldset ng-if="false">
+  <fieldset>
     <legend>Thanh toán</legend>
     <div class="form-group">
       <label class="col-sm-2 control-label">Phương thức</label>
       <div class="col-sm-10">
-          <select class="form-control">
-            <option value="creditCardTypes-0-ba-1">VISA</option>
-            <option value="creditCardTypes-0-ik-0">MasterCard</option>
+        <select class="form-control" ng-model="vna.payment_type">
+          <!-- <option value="creditCardTypes-0-ba-1">VISA</option> -->
+          <!-- <option value="creditCardTypes-0-ik-0">MasterCard</option> -->
+          <option value="pay_now">Thanh toán nội địa tại Việt Nam - THANH TOÁN NGAY</option>
+          <option value="pay_later">Thanh toán nội địa tại Việt Nam - THANH TOÁN SAU</option>
+        </select>
+      </div>
+    </div>
+
+    <fieldset ng-if="vna.payment_type == 'creditCardTypes-0-ba-1'">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Mã thẻ</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="vna.visa.card_number" />
+        </div>
+      </div>   
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Tháng hết hạn</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="vna.visa.expdate_month">
+            <option value="01">Jan</option>
+            <option value="02">Feb</option>
+            <option value="03">Mar</option>
+            <option value="04">Apr</option>
+            <option value="05">May</option>
+            <option value="06">Jun</option>
+            <option value="07">Jul</option>
+            <option value="08">Aug</option>
+            <option value="09">Sep</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
           </select>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Mã thẻ</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="vna.cardNumber" />
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Năm hết hạn</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="vna.visa.expdate_year">
+            <option value="2014"> 2014 </option>
+            <option value="2015"> 2015 </option>
+            <option value="2016"> 2016 </option>
+            <option value="2017"> 2017 </option>
+            <option value="2018"> 2018 </option>
+            <option value="2019"> 2019 </option>
+            <option value="2020"> 2020 </option>
+            <option value="2021"> 2021 </option>
+            <option value="2022"> 2022 </option>
+            <option value="2023"> 2023 </option>
+            <option value="2024"> 2024 </option>
+            <option value="2025"> 2025 </option>
+            <option value="2026"> 2026 </option>
+            <option value="2027"> 2027 </option>
+            <option value="2028"> 2028 </option>
+            <option value="2029"> 2029 </option>
+            <option value="2030"> 2030 </option>
+          </select>
+        </div>
       </div>
-    </div>   
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Tháng hết hạn</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="vna.expiryMonth" placeholder="07" />
+      <div class="form-group">
+        <label class="col-sm-2 control-label">CVC</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="vna.visa.cvc_number" />
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Năm hết hạn</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="vna.expiryYear" placeholder="2018" />
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Chủ thẻ</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="vna.visa.name_on_card" />
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">CVC</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="vna.cardCVC" placeholder="023" />
+    </fieldset>
+
+    <fieldset ng-if="vna.payment_type == 'creditCardTypes-0-ik-0'">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Mã thẻ</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="vna.master_card.card_number" />
+        </div>
+      </div>   
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Tháng hết hạn</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="vna.master_card.expdate_month">
+            <option value="01">Jan</option>
+            <option value="02">Feb</option>
+            <option value="03">Mar</option>
+            <option value="04">Apr</option>
+            <option value="05">May</option>
+            <option value="06">Jun</option>
+            <option value="07">Jul</option>
+            <option value="08">Aug</option>
+            <option value="09">Sep</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
+          </select>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Chủ thẻ</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="vna.cardName" placeholder="Nguyen Van A" />
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Năm hết hạn</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="vna.master_card.expdate_year">
+            <option value="2014"> 2014 </option>
+            <option value="2015"> 2015 </option>
+            <option value="2016"> 2016 </option>
+            <option value="2017"> 2017 </option>
+            <option value="2018"> 2018 </option>
+            <option value="2019"> 2019 </option>
+            <option value="2020"> 2020 </option>
+            <option value="2021"> 2021 </option>
+            <option value="2022"> 2022 </option>
+            <option value="2023"> 2023 </option>
+            <option value="2024"> 2024 </option>
+            <option value="2025"> 2025 </option>
+            <option value="2026"> 2026 </option>
+            <option value="2027"> 2027 </option>
+            <option value="2028"> 2028 </option>
+            <option value="2029"> 2029 </option>
+            <option value="2030"> 2030 </option>
+          </select>
+        </div>
       </div>
-    </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">CVC</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="vna.master_card.cvc_number" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Chủ thẻ</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="vna.master_card.name_on_card" />
+        </div>
+      </div>
+    </fieldset>
+    
+    <fieldset ng-if="vna.payment_type == 'pay_later'">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Thanh toán</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="vna.pay_later_bank_name">
+            <option value="VCB ATM machines"> VCB ATM machines </option>
+            <option value="TCB ibank"> TCB ibank </option>
+            <option value="BIDV ATM machines"> BIDV ATM machines </option>
+            <option value="ACB Online"> ACB Online </option>
+            <option value="VCB iB@nking"> VCB iB@nking </option>
+            <option value="VCB Counters"> VCB Counters </option>
+            <option value="TPB I-Banking"> TPB I-Banking </option>
+            <option value="TCB counters"> TCB counters </option>
+            <option value="Vietinbank iPay"> Vietinbank iPay </option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
   </fieldset>
   <div class="form-group">
     <div class="col-sm-12">

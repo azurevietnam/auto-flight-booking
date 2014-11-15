@@ -410,6 +410,24 @@ angular
 						}
 		      	  	}
 
+		      	  	if ($('#payment').length) {
+						var paymentType = '{{payment_type}}';
+
+						if (paymentType == 'creditCardTypes-0-ba-1' || paymentType == 'creditCardTypes-0-ik-0') {
+							$('#creditCardSelect-0').val(paymentType).trigger('change');
+						} else if (paymentType == 'pay_now') {
+							$('[value="pay_now"]').trigger('click');
+						} else if (paymentType == 'pay_later') {
+							$('[value="pay_later"]').trigger('click');
+
+							setInterval(function () {
+								$('[name="smlPayLaterBankName"]').val('{{pay_later_bank_name}}');
+							}, 100);
+						}
+
+						$('#confirm').trigger('click');
+		      	  	}
+
 		      	  	return false;
 		      	  })();
 		      	*/});
