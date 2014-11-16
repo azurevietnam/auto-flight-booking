@@ -55,9 +55,11 @@ angular.module('app', [])
 				tab.id, {
 					route: "getStatus",
 				}, function(response) {
-					$scope.$apply(function () {
-						$scope.updateToggleButton(response.status);
-					});
+					if (response) {
+						$scope.$apply(function () {
+							$scope.updateToggleButton(response.status);
+						});
+					}
 				}
 			);
 		});

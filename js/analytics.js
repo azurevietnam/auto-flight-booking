@@ -1,6 +1,16 @@
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', '36769951-3']);
-_gaq.push(['_trackPageview']);
+_gaq.push(['_setAccount', 'UA-36769951-4']);
+
+var gaParam = getUrlValue(document.location.href, "ga");
+if (gaParam) {
+	if (gaParam == "NOQUERY") {
+		sendGA(['_trackPageview', document.location.pathname]);
+	} else {
+		sendGA(['_trackPageview', document.location.pathname + "?ga=" + gaParam]);
+	}
+} else {
+	sendGA(['_trackPageview']);
+}
 
 (function() {
   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;

@@ -11,6 +11,7 @@
 	<script src="/bower_components/angular/angular.min.js"></script>
 	<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="/js/common.js"></script>	
 	<script src="app.js"></script>
 </head>
 <body ng-app="app" ng-controller="Ctrl">
@@ -21,9 +22,9 @@
 			</div>
 			<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 				<ul class="nav navbar-nav">
-					<li ui-sref-active="active"><a ui-sref="vietjetair">VietjetAir</a></li>
-					<li ui-sref-active="active"><a ui-sref="jetstar">JetStar</a></li>
-					<li ui-sref-active="active"><a ui-sref="vietnam-airlines">Vietnam Airlines</a></li>
+					<li ui-sref-active="active"><a ui-sref="vietjetair" id="vietjetair-autocomplete">VietjetAir</a></li>
+					<li ui-sref-active="active"><a ui-sref="jetstar" id="jetstar-autocomplete">JetStar</a></li>
+					<li ui-sref-active="active"><a ui-sref="vietnam-airlines" id="vietname-airlines-autocomplete">Vietnam Airlines</a></li>
 				</ul>
 			</nav>
 		</div>
