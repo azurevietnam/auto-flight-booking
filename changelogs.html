@@ -8,25 +8,42 @@
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 	<script src="/js/jquery/jquery.min.js"></script>
 	<script src="/js/common.js"></script>
+	<script src="/bower_components/angular/angular.min.js"></script>
+	<script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+	<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<script src="changelogs/app.js"></script>	
 </head>
-<body>
+<body ng-app="app">
 	<header class="navbar navbar-default" role="banner">
 		<div class="container">
 			<div class="navbar-header">
-				<a href="/changelogs.html" class="navbar-brand">Auto Flight Booking Changelogs</a>
+				<a href="/changelogs.html" class="navbar-brand">Thay đổi trong các phiên bản của Auto Flight Booking</a>
 			</div>
 		</div>
 	</header>
 	<div class="container" style="padding-bottom: 50px;">
+		<accordion>
+			<accordion-group heading="Phiên bản 3.3.0" is-open="open" ng-init="open = true;">
+				<h4>Thêm chức năng nhập thông tin nhanh cho Vietnam Airlines</h4>
+				<iframe width="560" height="315" src="http://www.youtube.com/embed/fP2WUurWTQA" frameborder="0" allowfullscreen></iframe>
+				<hr>
+				<h4>Tích hợp chatbox của <a href="http://baynhe.vn">Bay Nhé</a></h4>
+				<p><a href="src/chat/index.html" target="_blank">Link chatbox mới</a></p>
+				<p style="font-style: italic;">Tính năng này sẽ giúp mọi người đặt vé nhanh hơn khi nhận được tin từ các bạn trong Bay Nhé và Ứng dụng :)</p>
+				<hr />
+				<h4>Thêm video hướng dẫn cách sử dụng ứng dụng</h4>
+				<p>Bạn có thể vào trang <a href="src/help/index.html" target="_blank">Hướng dẫn</a> để xem chi tiết nhé.</p>
+			</accordion-group>
+			<accordion-group heading="Phiên bản 2">
+				<h4>Tự động nhập thông tin chuyến bay</h4>
+				<p style="font-style: italic;">Cách nhập thông tin cho Vietjet tương tự như trên demo.</p>
+				<iframe width="560" height="315" src="http://www.youtube.com/embed/6pa2WiBZ5hU" frameborder="0" allowfullscreen></iframe>
+				<hr />
+				<h4>Thêm nút hiển thị tab có vé rẻ trên hộp thông báo</h4>
+				<img src="/images/discount-page-button.png" />
+			</accordion-group>
+		</accordion>		
 		<div>
-			<h3>Thay đổi trong phiên bản mới (v2)</h3>
-			<hr />
-			<h4>Tự động nhập thông tin chuyến bay</h4>
-			<p style="font-style: italic;">Cách nhập thông tin cho Vietjet tương tự như trên demo.</p>
-			<iframe width="560" height="315" src="http://www.youtube.com/embed/6pa2WiBZ5hU" frameborder="0" allowfullscreen></iframe>
-			<hr />
-			<h4>Thêm nút hiển thị tab có vé rẻ trên hộp thông báo</h4>
-			<img src="/images/discount-page-button.png" />
 		</div>
 	</div>
 </body>

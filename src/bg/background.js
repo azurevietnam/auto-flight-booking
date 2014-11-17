@@ -13,9 +13,9 @@ if (getVersionNumber(currentVersion) > getVersionNumber(latestVersion)) {
 }
 
 function onUpdated() {
-/*  chrome.tabs.create({
+  chrome.tabs.create({
   	url: '/changelogs.html'
-  });*/
+  });
 
   localStorage.setItem('latestVersion', currentVersion);
 }
