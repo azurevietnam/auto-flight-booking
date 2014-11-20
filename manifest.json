@@ -13,8 +13,8 @@
 	"default_locale":"en",
 
 	"background": {
-		"scripts" : ["src/bg/background.js"],
-		"persistent": false
+		"page" : "src/bg/background.html",
+		"persistent": true
   	},
 
 	"browser_action":{
@@ -28,7 +28,8 @@
 
 	"permissions":[
 		"notifications",
-		"tabs"
+		"tabs",
+		"*://baynhe.vn/feed"
 	],
 
 	"content_scripts":[
