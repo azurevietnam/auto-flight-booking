@@ -6,6 +6,11 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+	<style>
+	.accordion-toggle {
+		cursor: pointer;
+	}
+	</style>
 	<script src="/js/jquery/jquery.min.js"></script>
 	<script src="/js/common.js"></script>
 	<script src="/bower_components/angular/angular.min.js"></script>
@@ -23,7 +28,12 @@
 	</header>
 	<div class="container" style="padding-bottom: 50px;">
 		<accordion>
-			<accordion-group heading="Phiên bản 3.3.0" is-open="open" ng-init="open = true;">
+			<accordion-group heading="Phiên bản 4" is-open="open" ng-init="open = true;">
+				<h4>Tự động thông báo bài viết mới từ <a href="http://baynhe.vn" target="_blank">baynhe.vn</a></h4>
+				<img src="changelogs/baynhe_latest_posts.png" alt="BayNhe Latest Posts" />
+				<p style="font-style: italic;">Với chức năng này, bạn sẽ luôn cập nhật được tin tức về vé rẻ nhanh nhất từ <a href="http://baynhe.vn" target="_blank">baynhe.vn</a></p>
+			</accordion-group>
+			<accordion-group heading="Phiên bản 3">
 				<h4>Thêm chức năng nhập thông tin nhanh cho Vietnam Airlines</h4>
 				<iframe width="560" height="315" src="http://www.youtube.com/embed/fP2WUurWTQA" frameborder="0" allowfullscreen></iframe>
 				<hr>

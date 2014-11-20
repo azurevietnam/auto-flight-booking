@@ -28,7 +28,7 @@ function setCacheLatestPostId(postId) {
 function latestPostProcess() {
 	var cacheLatestPostId = getCacheLatestPostId();
 
-	jQuery.get( "http://baynhe.vn/feed", function(data) {
+	jQuery.get("http://baynhe.vn/feed", function(data) {
 	    var $feed = $(data),
 	    	cacheLatestPostFoundIndex = -1;
 
@@ -82,6 +82,6 @@ function latestPostProcess() {
 	}, 'xml');
 }
 
-setInterval(latestPostProcess, 1 * 60 * 1000);
+setInterval(latestPostProcess, 15 * 60 * 1000);
 
 latestPostProcess();
