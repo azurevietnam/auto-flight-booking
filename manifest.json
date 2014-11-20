@@ -1,6 +1,6 @@
 {
 	"name":"Auto Flight Booking",
-	"version":"3.3.0",
+	"version":"4.0.0",
 	"manifest_version" : 2,
 
 	"description":"Ứng dụng trợ giúp mua vé máy bay VietJetAir, JetStar, Vietnam Airlines",
@@ -10,11 +10,11 @@
 		"48":"icons/icon48.png",
 		"128":"icons/icon128.png"
 	},
-	"default_locale":"en",
+	"default_locale":"vi",
 
 	"background": {
-		"scripts" : ["src/bg/background.js"],
-		"persistent": false
+		"page" : "src/bg/background.html",
+		"persistent": true
   	},
 
 	"browser_action":{
@@ -28,7 +28,8 @@
 
 	"permissions":[
 		"notifications",
-		"tabs"
+		"tabs",
+		"*://baynhe.vn/feed"
 	],
 
 	"content_scripts":[
