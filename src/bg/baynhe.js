@@ -1,6 +1,6 @@
 chrome.notifications.onClicked.addListener(function () {
 	chrome.tabs.create({
-		url: 'http://baynhe.vn'
+		url: 'http://www.baynhe.vn/?utm_source=afb&utm_medium=app&utm_campaign=afb'
 	}, function () {
 		chrome.notifications.clear('baynhe_posts', function () {})
 	});
