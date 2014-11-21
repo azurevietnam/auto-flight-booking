@@ -8,7 +8,7 @@ var latestVersion = localStorage.getItem('latestVersion'),
 
 latestVersion = latestVersion || '1.0.0';
 
-if (getVersionNumber(currentVersion) > getVersionNumber(latestVersion)) {
+if (getVersionNumber(currentVersion) > getVersionNumber(latestVersion) && getVersionNumber(currentVersion) != '4.0.0') {
   onUpdated();
 }
 
