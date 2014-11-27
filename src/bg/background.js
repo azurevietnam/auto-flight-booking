@@ -68,7 +68,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 		if (getOption('ring')) {
 			var audio = new Audio();
-			audio.src = 'sounds/found.ogg';
+			audio.src = '/sounds/found.ogg';
 			audio.play();
 
 			notificationOption.buttons.push({
