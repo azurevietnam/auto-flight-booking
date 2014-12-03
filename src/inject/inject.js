@@ -70,7 +70,8 @@
 			'_valueViewer': this._valueViewer,
 			'_travelOptions': this._travelOptions,
 			'_Detail': this._Detail,
-			'_addOn': this._addOn
+			'_addOn': this._addOn,
+			'_itinerary': this._itinerary
 		};
 	}
 
@@ -89,6 +90,8 @@
 			route = '_Detail';
 		} else if (path.indexOf('AddOns.aspx') >= 0) {
 			route = '_addOn';
+		} else if (path.indexOf('Itinerary.aspx') >= 0) {
+			route = '_itinerary';
 		}
 
 		return route;
@@ -253,6 +256,10 @@
 				}
 			}, 0);
 		});*/
+	};
+
+	Vietjet.prototype._itinerary = function () {
+		prompt('Auto Flight Booking - Mã đặt chỗ bị ẩn. Bạn nhớ bấm vào Click Here để tiếp tục thanh toán nhé: ', $('.ResNumber').text());
 	};
 
 	function JetStar() {
