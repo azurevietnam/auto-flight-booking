@@ -259,7 +259,7 @@
 	};
 
 	Vietjet.prototype._itinerary = function () {
-		prompt('Auto Flight Booking: Mã đặt chỗ bị ẩn', $('.ResNumber').text());
+		prompt('Auto Flight Booking - Mã đặt chỗ bị ẩn. Bạn nhớ bấm vào Click Here để tiếp tục thanh toán nhé: ', $('.ResNumber').text());
 	};
 
 	function JetStar() {
