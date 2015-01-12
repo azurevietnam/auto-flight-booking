@@ -98,6 +98,12 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			chrome.notifications.create('afb_found', notificationOption, function () {
 			});
 		});
+	} else if (request.route == 'checkout_vja_mobile') {
+		localStorage.setItem('checkout_vja_mobile', request.data);
+
+		chrome.tabs.create({
+			url: '/src/placeholders/vietjet.html'
+		});
 	}
 });
 

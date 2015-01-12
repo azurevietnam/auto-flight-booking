@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vietjet Checkout</title>
+
+</head>
+<body>
+	<form action="https://m.vietjetair.com/Controller/SearchFlightRouteController.php" method="post" target="mobile-iframe">
+		<input type="hidden" name="flightType" value="ReturnFare" />
+		<input type="hidden" name="departureAirport" value="HAN" />
+		<input type="hidden" name="arrivalAirport" value="SGN" />
+		<input type="hidden" name="departureDate" value="2015-01-21" />
+		<input type="hidden" name="arrivalDate" value="2015-01-23" />
+		<input type="hidden" name="adult" value="1" />
+		<input type="hidden" name="currencyCode" value="VND" />
+	</form>
+	<iframe name="mobile-iframe" id="iframe" style="display: none;"></iframe>
+	<script src="vietjet.js"></script>
+</body>
+</html>

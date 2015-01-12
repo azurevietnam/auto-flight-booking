@@ -100,6 +100,23 @@
 	Vietjet.prototype._valueViewer = function () {
 		var app = App.getInstance();
 
+		// Display checkout in mobile buttons
+		var $checkoutflightButton = $('<a class="button" href="#">Đặt vé trên mobile</a>');
+		$('#vvDepDiv').after($checkoutflightButton);
+
+		$checkoutflightButton.bind('click', function (evt) {
+			evt.preventDefault();
+
+			app.sendMessage({
+				route: 'checkout_vja_mobile',
+				data: {
+					flightType: 'ReturnFare'
+				}
+			}, function () {
+				
+			});
+		});
+
 		if (!app.isOn()) {
 			return false;
 		}
