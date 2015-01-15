@@ -5,7 +5,40 @@ function getCurrentTab(callback) {
 }
 
 angular.module('app', [])
-	.controller('Ctrl', function ($scope) {
+	.filter('to_trusted', ['$sce', function($sce){
+        return function(text) {
+            return $sce.trustAsHtml(text);
+        };
+    }])
+	.controller('Ctrl', function ($scope, $http) {
+		/* Update Process */
+		function getVersionNumber(verionString) {
+		  return parseInt(verionString.replace(/\./g, ''));
+		}
+
+		var latestVersion = localStorage.getItem('latestVersion'),
+			currentVersion = chrome.app.getDetails().version;
+
+		latestVersion = latestVersion || '1.0.0';
+
+		if (getVersionNumber(currentVersion) > getVersionNumber(latestVersion)) {
+		  onUpdated();
+		}
+
+		function onUpdated() {
+		  $scope.hasNewVersion = true;
+		}
+
+		$scope.updateVersion = function () {
+			localStorage.setItem('latestVersion', currentVersion);
+		};
+
+		// Get information
+		$http.get('http://cunghocweb.com/afb/info.php')
+		  .success(function(data) {
+		    $scope.codes = data;
+		  });
+
 		/* Options */
 		$scope.options = {
 			minPrice: 500000,

@@ -1,26 +1,3 @@
-/* Update Process */
-function getVersionNumber(verionString) {
-  return parseInt(verionString.replace(/\./g, ''));
-}
-
-var latestVersion = localStorage.getItem('latestVersion'),
-	currentVersion = chrome.app.getDetails().version;
-
-latestVersion = latestVersion || '1.0.0';
-
-if (getVersionNumber(currentVersion) > getVersionNumber(latestVersion)) {
-  onUpdated();
-}
-
-function onUpdated() {
-/*  chrome.tabs.create({
-  	url: '/changelogs.html'
-  });*/
-
-  localStorage.setItem('latestVersion', currentVersion);
-}
-
-
 function getOption(key) {
 	var options = JSON.parse(localStorage.getItem('options'));
 

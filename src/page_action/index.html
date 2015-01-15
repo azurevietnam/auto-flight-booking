@@ -8,6 +8,10 @@
 		body {
 			padding: 15px;
 		}
+
+		.new-version-label {
+			color: red;
+		}
 		</style>
 		<script src="/js/jquery/jquery.min.js"></script>
 		<script src="/js/common.js"></script>
@@ -18,19 +22,21 @@
 
 	<body ng-app="app" ng-controller="Ctrl">
 		<div class="container" style="width: 400px;">
-			<h4 style="text-align: center;"><a href="/changelogs.html" target="_blank">Auto Flight Booking v5.1</a></h4>
+			<h4 style="text-align: center;"><a href="/changelogs.html" id="changelogs" target="_blank" title="Xem thay đổi trong phiên bản mới" ng-click="updateVersion()">Auto Flight Booking v6<span class="new-version-label" ng-if="hasNewVersion"> (NEW)</span></a></h4>
 			<ul class="nav nav-pills">
 			  <li><a href="#" ng-click="openHelp()" id="help-page">Hướng dẫn</a></li>
 			  <li><a href="#" ng-click="openAutocompleteForm()" id="autocomplete-page">Nhập thông tin chuyến bay</a></li>
 			  <li><a href="#" ng-click="openChatbox()" id="chat-page">Chat</a></li>
 			</ul>
-
+			<div id="codes">
+				<div ng-repeat="code in codes" ng-bind-html="code | to_trusted"></div>
+			</div>
 			<div class="form-horizontal" style="margin-top: 20px;">
 				<fildset>
 					<legend>Theo dõi giá vé</legend>
 				</fieldset>
 			  <div class="form-group">
-			    <label class="col-sm-2 control-label">Giá vé tối thiểu:</label>
+			    <label class="col-sm-2 control-label">Giá vé tối đa:</label>
 			    <div class="col-sm-10">
 			      <input type="number" class="form-control" ng-model="options.minPrice" />
 			    </div>
@@ -57,8 +63,7 @@
 			    </div>
 			  </div>
 			</div>
-			<p>Có thể bạn sẽ thích <a href="https://chrome.google.com/webstore/detail/hayhaytv-adblock/geejblpbfelpopjmkejabpbklggehnno?utm_source=afb" target="_blank">tiện ích chặn quảng cáo trên HayhayTv</a> của mình :)</p>
-			<p>Liên hệ tác giả: luanvuvt@gmail.com</p>
+			<p>Liên hệ tác giả: <a href="mailto:luanvuvt@gmail.com">luanvuvt@gmail.com</a></p>
 		</div>
 	</body>
 </html>
