@@ -116,7 +116,7 @@
 			var days = valueTables[0].querySelectorAll('.fareClass div, .vvDaySearchFlightSelected div');
 
 			for (var i = 0; i < days.length; i++) {
-				price = parseInt(days[i].querySelector('.vvFare').textContent.replace(/,/g, ''));
+				price = parseInt(days[i].querySelector('.vvFare').textContent.replace(/[,\$]/g, '').replace(/\.\d+/, ''));
 
 				if (price <= app.settings.minPrice) {
 					days1.push(parseInt(days[i].innerHTML));
@@ -129,7 +129,7 @@
 			var days = valueTables[1].querySelectorAll('.fareClass div, .vvDaySearchFlightSelected div');
 
 			for (var i = 0; i < days.length; i++) {
-				price = parseInt(days[i].querySelector('.vvFare').textContent.replace(/,/g, ''));
+				price = parseInt(days[i].querySelector('.vvFare').textContent.replace(/[,\$]/g, '').replace(/\.\d+/, ''));
 
 				if (price <= app.settings.minPrice) {
 					days2.push(parseInt(days[i].innerHTML));
@@ -169,10 +169,10 @@
 			var rows = priceTables[0].querySelectorAll('.FaresGrid td');
 
 			for (var i = 0; i < rows.length; i++) {
-				price = rows[i].textContent.replace(/,/g, '');
+				price = parseInt(rows[i].textContent.replace(/[,\$]/g, '').replace(/\.\d+/, ''));
 
 				if (price <= app.settings.minPrice) {
-					matches = rows[i].parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('td td td').textContent.match(/\d+:\d+/);
+					matches = rows[i].parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('td td td:nth-child(2)').textContent.match(/\d+:\d+/);
 
 					if (matches) {
 						hours1.push(matches[0]);
@@ -186,10 +186,10 @@
 			var rows = priceTables[1].querySelectorAll('.FaresGrid td');
 
 			for (var i = 0; i < rows.length; i++) {
-				price = rows[i].textContent.replace(/,/g, '');
+				price = parseInt(rows[i].textContent.replace(/[,\$]/g, '').replace(/\.\d+/, ''));
 
 				if (price <= app.settings.minPrice) {
-					matches = rows[i].parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('td td td').textContent.match(/\d+:\d+/);
+					matches = rows[i].parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('td td td:nth-child(2)').textContent.match(/\d+:\d+/);
 
 					if (matches) {
 						hours2.push(matches[0]);
