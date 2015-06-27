@@ -65,7 +65,14 @@ angular
 	      	  			adults = {{{json adults}}},
 	      	  			children = {{{json children}}},
 	      	  			direction = ($bagSelect.length == adults.length + children.length) ? 1 : 2,
-	      	  			bagIndex = 0;
+	      	  			bagIndex = 0,
+	      	  			insurance = '{{insurance}}';
+
+	      	  		if (insurance === 'yes') {
+						$('#chkInsuranceYes')[0].click();
+	      	  		} else {
+						$('#chkInsuranceNo')[0].click();
+	      	  		}
 
 					adults.forEach(function (adult) {
 						var bag1El = $bagSelect[bagIndex],

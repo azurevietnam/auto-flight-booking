@@ -126,6 +126,18 @@
     <span class="help-block">Lưu ý: Tại bước đặt ghế ngồi, bạn phải tự chọn ghế.</span>
   </fieldset>
   <fieldset>
+    <legend>Bảo hiểm</legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Đặt bảo hiểm</label>
+      <div class="col-sm-10">
+        <select class="form-control" ng-model="vietjet.insurance">
+          <option value="no">Không</option>
+          <option value="yes">Có</option>
+        </select>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
     <legend>Thanh toán</legend>
     <div class="form-group">
       <label class="col-sm-2 control-label" ng-model="vietjet.child.title">Phương thức</label>
