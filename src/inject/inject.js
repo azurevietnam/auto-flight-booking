@@ -101,16 +101,75 @@
 		var app = App.getInstance();
 
 		// Display checkout in mobile buttons
-		var $checkoutflightButton = $('<a class="button" href="#">Đặt vé trên mobile</a>');
-		$('#vvDepDiv').after($checkoutflightButton);
+		var $depBtn = $('<a class="button afb-mobile-checkout" href="#" data-direction="departure">Đặt vé chiều đi</a>'),
+			$arrBtn = $('<a class="button afb-mobile-checkout" href="#" data-direction="arrival">Đặt vé chiều về</a>'),
+			$bothBtn = $('<a class="button afb-mobile-checkout" href="#" data-direction="both">Đặt vé khứ hồi</a>');
 
-		$checkoutflightButton.bind('click', function (evt) {
+		$('#vvDepDiv').after($depBtn);
+		$('#vvRetDiv').after($arrBtn);
+
+		$('.afb-mobile-checkout').bind('click', function (evt) {
 			evt.preventDefault();
 
+			var direction = $(this).data('direction'),
+				departureAirport,
+				arrivalAirport,
+				depDate,
+				arrDate,
+				adult,
+				child,
+				infant;
+
+			if (direction == 'departure') {
+				var airpostText = $('#segmentDescriptionDeparture').text(),
+					airpostMatch = airpostText.match(/\(\w+\)/g);
+
+				if (airpostMatch) {
+					departureAirport = airpostMatch[0].replace(/[\(\)]/g, '');
+					arrivalAirport = airpostMatch[1].replace(/[\(\)]/g, '');
+				}
+
+				var depDateMatch = $('[name="ctrValueViewerDep"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
+				if (depDateMatch) {
+					depDateMatch.splice(0, 1);
+					depDate = depDateMatch.join('-');
+				}
+			} else if (direction == 'arrival') {
+				var airpostText = $('#segmentDescriptionArrival').text(),
+					airpostMatch = airpostText.match(/\(\w+\)/g);
+
+				if (airpostMatch) {
+					departureAirport = airpostMatch[0].replace(/[\(\)]/g, '');
+					arrivalAirport = airpostMatch[1].replace(/[\(\)]/g, '');
+				}
+
+				var depDateMatch = $('[name="ctrValueViewerRet"]').val().match(/(\d+)\/(\d+)\/(\d+)/);
+				if (depDateMatch) {
+					depDateMatch.splice(0, 1);
+					depDate = depDateMatch.join('-');
+				}
+			} else if (direction == 'both') {
+
+			}
+
+			var passenserMatch = $('#tblPaxCountsInfo').text().match(/\d+/g);
+
+			adult = passenserMatch[0];
+			child = passenserMatch[1];
+			infant = passenserMatch[2];
+
+debugger;
 			app.sendMessage({
 				route: 'checkout_vja_mobile',
 				data: {
-					flightType: 'ReturnFare'
+					flightType: direction === 'both' ? 'ReturnFare' : 'OnewayFare',
+					departureAirport: departureAirport,
+					arrivalAirport: arrivalAirport,
+					departureDate: depDate,
+					arrivalDate: arrDate,
+					adult: adult,
+					child: child,
+					infant: infant
 				}
 			}, function () {
 				

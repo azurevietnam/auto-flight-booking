@@ -99,7 +99,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			});
 		});
 	} else if (request.route == 'checkout_vja_mobile') {
-		localStorage.setItem('checkout_vja_mobile', request.data);
+		localStorage.setItem('checkout_vja_mobile', JSON.stringify(request.data));
 
 		chrome.tabs.create({
 			url: '/src/placeholders/vietjet.html'
