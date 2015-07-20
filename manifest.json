@@ -1,6 +1,6 @@
 {
 	"name":"Auto Flight Booking",
-	"version":"6.2.0",
+	"version":"6.2.1",
 	"manifest_version" : 2,
 
 	"description":"Ứng dụng trợ giúp mua vé máy bay VietJetAir, JetStar, Vietnam Airlines",
