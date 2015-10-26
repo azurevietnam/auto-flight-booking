@@ -438,7 +438,7 @@
 
 			if (url.indexOf('booknow.jetstar.com') >= 0 || url.indexOf('book.jetstar.com') >= 0) {
 				airline = new JetStar();
-			} else if (url.indexOf('ameliaweb5.intelisys.ca') >= 0) {
+			} else if (url.indexOf('book.vietjetair.com') >= 0) {
 				airline = new Vietjet();
 			}
 

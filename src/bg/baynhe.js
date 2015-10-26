@@ -1,6 +1,6 @@
 chrome.notifications.onClicked.addListener(function () {
 	chrome.tabs.create({
-		url: 'http://sh.st/c3jsv'
+		url: 'http://bit.ly/afb-bay-nhe'
 	}, function () {
 		chrome.notifications.clear('baynhe_posts', function () {})
 	});
